@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KSTU Electronic Store - ကျောက်ဆည် TU</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <!-- Shop.com.mm Style Header -->
+    <header class="bg-orange-600 text-white shadow-md sticky top-0 z-50">
+      <div
+        class="container mx-auto px-4 py-3 flex items-center justify-between"
+      >
+        <!-- Logo / Brand Name -->
+        <div class="text-2xl font-bold tracking-wider cursor-pointer">
+          KSTU <span class="text-yellow-300">Store</span>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="flex-1 max-w-xl mx-8 hidden md:flex">
+          <input
+            type="text"
+            placeholder="Arduino, Sensor, မော်တာများ ရှာရန်..."
+            class="w-full px-4 py-2 rounded-l-md text-gray-800 focus:outline-none"
+          />
+          <button
+            class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 rounded-r-md font-semibold transition"
+          >
+            ရှာရန်
+          </button>
+        </div>
+
+        <!-- Cart Button -->
+        <div class="flex items-center space-x-4">
+          <button
+            id="cart-btn"
+            class="cursor-pointer flex items-center space-x-1 bg-orange-700 px-4 py-2 rounded-md hover:bg-orange-800 transition"
+          >
+            <span>🛒 Cart</span>
+            <span
+              id="cart-count"
+              class="bg-yellow-400 text-gray-900 text-xs font-bold px-2 py-0.5 rounded-full"
+              >0</span
+            >
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto px-4 py-8">
+      <!-- Banner -->
+      <div
+        class="bg-gradient-to-r from-orange-500 to-yellow-500 text-white p-6 rounded-lg shadow-md mb-8 flex justify-between items-center"
+      >
+        <div>
+          <h1 class="text-3xl font-bold">KSTU Electronic Store</h1>
+          <p class="mt-2 text-orange-100">
+            Project အတွက် လိုအပ်တဲ့ ပစ္စည်းတွေကို လွယ်ကူစွာ ဝယ်ယူလိုက်ပါ။
+          </p>
+        </div>
+        <div class="hidden md:block text-5xl">⚡🛠️</div>
+      </div>
+
+      <!-- Section Title -->
+      <div class="flex justify-between items-center mb-6">
+        <h2
+          class="text-xl font-bold text-gray-800 border-l-4 border-orange-600 pl-3"
+        >
+          လူကြိုက်များသော ပစ္စည်းများ
+        </h2>
+      </div>
+
+      <!-- Product Grid -->
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+      >
+        <!-- Product 1 -->
+        <div
+          class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200"
+        >
+          <div
+            class="h-48 bg-gray-200 flex items-center justify-center text-gray-500"
+          >
+            <span class="text-4xl">🔌</span>
+          </div>
+          <div class="p-4">
+            <span
+              class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded font-semibold"
+              >Microcontroller</span
+            >
+            <h3 class="product-name font-bold text-gray-800 mt-2 text-lg">
+              Arduino Uno R3
+            </h3>
+            <p
+              class="product-price text-orange-600 font-bold text-xl mt-1"
+              data-price="25000"
+            >
+              25,000 ကျပ်
+            </p>
+            <button
+              class="add-to-cart-btn w-full mt-4 bg-orange-600 hover:bg-orange-700 text-white py-2 rounded-md font-semibold transition"
+            >
+              🛒 Cart ထဲထည့်မည်
+            </button>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div
+          class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200"
+        >
+          <div
+            class="h-48 bg-gray-200 flex items-center justify-center text-gray-500"
+          >
+            <span class="text-4xl">⚙️</span>
+          </div>
+          <div class="p-4">
+            <span
+              class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded font-semibold"
+              >Motors</span
+            >
+            <h3 class="product-name font-bold text-gray-800 mt-2 text-lg">
+              SG90 Servo Motor
+            </h3>
+            <p
+              class="product-price text-orange-600 font-bold text-xl mt-1"
+              data-price="4500"
+            >
+              4,500 ကျပ်
+            </p>
+            <button
+              class="add-to-cart-btn w-full mt-4 bg-orange-600 hover:bg-orange-700 text-white py-2 rounded-md font-semibold transition"
+            >
+              🛒 Cart ထဲထည့်မည်
+            </button>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div
+          class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200"
+        >
+          <div
+            class="h-48 bg-gray-200 flex items-center justify-center text-gray-500"
+          >
+            <span class="text-4xl">📡</span>
+          </div>
+          <div class="p-4">
+            <span
+              class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded font-semibold"
+              >Sensors</span
+            >
+            <h3 class="product-name font-bold text-gray-800 mt-2 text-lg">
+              HC-SR04 Ultrasonic
+            </h3>
+            <p
+              class="product-price text-orange-600 font-bold text-xl mt-1"
+              data-price="3500"
+            >
+              3,500 ကျပ်
+            </p>
+            <button
+              class="add-to-cart-btn w-full mt-4 bg-orange-600 hover:bg-orange-700 text-white py-2 rounded-md font-semibold transition"
+            >
+              🛒 Cart ထဲထည့်မည်
+            </button>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div
+          class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200"
+        >
+          <div
+            class="h-48 bg-gray-200 flex items-center justify-center text-gray-500"
+          >
+            <span class="text-4xl">🧵</span>
+          </div>
+          <div class="p-4">
+            <span
+              class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded font-semibold"
+              >Accessories</span
+            >
+            <h3 class="product-name font-bold text-gray-800 mt-2 text-lg">
+              Jumper Wires (40pcs)
+            </h3>
+            <p
+              class="product-price text-orange-600 font-bold text-xl mt-1"
+              data-price="2000"
+            >
+              2,000 ကျပ်
+            </p>
+            <button
+              class="add-to-cart-btn w-full mt-4 bg-orange-600 hover:bg-orange-700 text-white py-2 rounded-md font-semibold transition"
+            >
+              🛒 Cart ထဲထည့်မည်
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Cart Sidebar / Modal -->
+    <div
+      id="cart-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-end"
+    >
+      <div
+        class="bg-white w-full max-w-md h-full p-6 flex flex-col justify-between shadow-xl"
+      >
+        <div>
+          <div class="flex justify-between items-center border-b pb-4">
+            <h3 class="text-xl font-bold text-gray-800">သင်၏ 🛒 Cart စာရင်း</h3>
+            <button
+              id="close-modal"
+              class="text-gray-500 hover:text-gray-800 text-xl font-bold cursor-pointer"
+            >
+              ✕
+            </button>
+          </div>
+          <!-- Cart Items List -->
+          <div
+            id="cart-items-container"
+            class="mt-4 space-y-3 overflow-y-auto max-h-[40vh]"
+          >
+            <p class="text-gray-500 text-center py-8">
+              Cart ထဲတွင် ပစ္စည်းမရှိသေးပါ။
+            </p>
+          </div>
+        </div>
+
+        <!-- Checkout Form & Total -->
+        <div class="border-t pt-4 space-y-3">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700"
+              >အမည် / ကျောင်းနှစ်:</label
+            >
+            <input
+              type="text"
+              id="customer-name"
+              placeholder="ဥပမာ - Maung Maung (4th Year EC)"
+              class="w-full mt-1 px-3 py-2 border rounded-md text-sm focus:outline-none focus:border-orange-500"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700"
+              >ဆောင်/ဆက်သွယ်ရန် ဖုန်းနံပါတ်:</label
+            >
+            <input
+              type="text"
+              id="customer-phone"
+              placeholder="ဥပမာ - 09xxxxxxxxx"
+              class="w-full mt-1 px-3 py-2 border rounded-md text-sm focus:outline-none focus:border-orange-500"
+            />
+          </div>
+
+          <div
+            class="flex justify-between text-lg font-bold text-gray-800 pt-2 border-t"
+          >
+            <span>စုစုပေါင်းကျသင့်ငွေ:</span>
+            <span id="total-price" class="text-orange-600">0 ကျပ်</span>
+          </div>
+          <button
+            id="checkout-btn"
+            class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-md font-bold transition cursor-pointer"
+          >
+            📲 Telegram ဖြင့် Order တင်မည်
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript ပိုင်း -->
+    <script>
+      let cart = [];
+      const cartCount = document.getElementById("cart-count");
+      const cartBtn = document.getElementById("cart-btn");
+      const cartModal = document.getElementById("cart-modal");
+      const closeModal = document.getElementById("close-modal");
+      const cartItemsContainer = document.getElementById(
+        "cart-items-container",
+      );
+      const totalPriceEl = document.getElementById("total-price");
+      const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+      const checkoutBtn = document.getElementById("checkout-btn");
+
+      // ပစ္စည်းထည့်မည်ခလုတ်နှိပ်ခြင်း
+      addToCartButtons.forEach((button) => {
+        button.addEventListener("click", (e) => {
+          const productCard = e.target.closest(".bg-white");
+          const name = productCard.querySelector(".product-name").textContent;
+          const priceEl = productCard.querySelector(".product-price");
+          const price = parseInt(priceEl.getAttribute("data-price"));
+
+          cart.push({ name, price });
+          updateCartUI();
+          alert(name + " ကို Cart ထဲသို့ ထည့်ပြီးပါပြီ!");
+        });
+      });
+
+      // Cart UI Update လုပ်ရန်
+      function updateCartUI() {
+        cartCount.textContent = cart.length;
+
+        if (cart.length === 0) {
+          cartItemsContainer.innerHTML =
+            '<p class="text-gray-500 text-center py-8">Cart ထဲတွင် ပစ္စည်းမရှိသေးပါ။</p>';
+          totalPriceEl.textContent = "0 ကျပ်";
+          return;
+        }
+
+        cartItemsContainer.innerHTML = "";
+        let total = 0;
+
+        cart.forEach((item, index) => {
+          total += item.price;
+          const itemDiv = document.createElement("div");
+          itemDiv.className =
+            "flex justify-between items-center bg-gray-50 p-3 rounded-md border";
+          itemDiv.innerHTML = `
+                    <div>
+                        <h4 class="font-semibold text-gray-800">${item.name}</h4>
+                        <p class="text-sm text-orange-600">${item.price.toLocaleString()} ကျပ်</p>
+                    </div>
+                    <button onclick="removeItem(${index})" class="text-red-500 hover:text-red-700 text-sm font-bold cursor-pointer">ဖယ်မည်</button>
+                `;
+          cartItemsContainer.appendChild(itemDiv);
+        });
+
+        totalPriceEl.textContent = total.toLocaleString() + " ကျပ်";
+      }
+
+      // ပစ္စည်းဖယ်ရှားရန်
+      window.removeItem = function (index) {
+        cart.splice(index, 1);
+        updateCartUI();
+      };
+
+      // Modal ဖွင့်/ပိတ်
+      cartBtn.addEventListener("click", () => {
+        cartModal.classList.remove("hidden");
+      });
+      closeModal.addEventListener("click", () => {
+        cartModal.classList.add("hidden");
+      });
+
+      // Telegram သို့ Order ပို့မည့် စနစ်
+      checkoutBtn.addEventListener("click", () => {
+        if (cart.length === 0) {
+          alert("ကျေးဇူးပြု၍ Cart ထဲသို့ ပစ္စည်း အနည်းဆုံး တစ်ခု ထည့်ပါ။");
+          return;
+        }
+
+        const name = document.getElementById("customer-name").value.trim();
+        const phone = document.getElementById("customer-phone").value.trim();
+
+        if (!name || !phone) {
+          alert("ကျေးဇူးပြု၍ အမည်နှင့် ဖုန်းနံပါတ် ဖြည့်ပေးပါ။");
+          return;
+        }
+
+        let orderText = `🛒 *KSTU Store Order အသစ်*\n\n`;
+        orderText += `👤 *ဝယ်သူ:* ${name}\n`;
+        orderText += `📞 *ဖုန်း:* ${phone}\n\n`;
+        orderText += `📦 *ဝယ်ယူသည့်ပစ္စည်းများ:*\n`;
+
+        let total = 0;
+        cart.forEach((item, i) => {
+          orderText += `${i + 1}. ${item.name} - ${item.price.toLocaleString()} ကျပ်\n`;
+          total += item.price;
+        });
+
+        orderText += `\n💰 *စုစုပေါင်းကျသင့်ငွေ:* ${total.toLocaleString()} ကျပ်`;
+
+        // ကိုယ့်ရဲ့ Telegram Username (သို့) Bot Chat Link (ဥပမာ - Telegram Username ကို 'your_username' နေရာတွင် ထည့်ပါ)
+        const myTelegramUsername = "Friend676"; // ကိုယ့်ရဲ့ Telegram username နဲ့ ချိတ်ရန်
+
+        // Telegram URL encode လုပ်ခြင်း
+        const encodedText = encodeURIComponent(orderText);
+
+        // Telegram chat သို့မဟုတ် Telegram Bot သို့ တိုက်ရိုက်ပို့မည့် Link
+        const telegramUrl = `https://t.me/${myTelegramUsername}?text=${encodedText}`;
+
+        // Window အသစ်ဖြင့် ဖွင့်မည်
+        window.open(telegramUrl, "_blank");
+      });
+    </script>
+  </body>
+</html>
