@@ -1,47 +1,40 @@
 <!doctype html>
-<html lang="en">
+<html lang="my">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KSTU Electronic Store - ကျောက်ဆည် TU</title>
+    <title>KSTU Store - E-Commerce</title>
     <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
   </head>
-  <body class="bg-gray-100">
-    <!-- Shop.com.mm Style Header -->
-    <header class="bg-orange-600 text-white shadow-md sticky top-0 z-50">
+  <body class="bg-gray-50 text-gray-800 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
       <div
-        class="container mx-auto px-4 py-3 flex items-center justify-between"
+        class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center"
       >
-        <!-- Logo / Brand Name -->
-        <div class="text-2xl font-bold tracking-wider cursor-pointer">
-          KSTU <span class="text-yellow-300">Store</span>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="flex-1 max-w-xl mx-8 hidden md:flex">
-          <input
-            type="text"
-            placeholder="Arduino, Sensor, မော်တာများ ရှာရန်..."
-            class="w-full px-4 py-2 rounded-l-md text-gray-800 focus:outline-none"
-          />
+        <h1 class="text-2xl font-bold text-indigo-600 flex items-center gap-2">
+          <i class="fa-solid fa-store"></i> KSTU Store
+        </h1>
+        <div class="flex items-center gap-4">
           <button
-            class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 rounded-r-md font-semibold transition"
+            id="admin-toggle-btn"
+            class="bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg text-sm font-medium transition flex items-center gap-1 cursor-pointer"
           >
-            ရှာရန်
+            <i class="fa-solid fa-gear"></i> Admin Panel
           </button>
-        </div>
-
-        <!-- Cart Button -->
-        <div class="flex items-center space-x-4">
           <button
             id="cart-btn"
-            class="cursor-pointer flex items-center space-x-1 bg-orange-700 px-4 py-2 rounded-md hover:bg-orange-800 transition"
+            class="relative bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition flex items-center gap-2 cursor-pointer"
           >
-            <span>🛒 Cart</span>
+            <i class="fa-solid fa-cart-shopping"></i> Cart
             <span
               id="cart-count"
-              class="bg-yellow-400 text-gray-900 text-xs font-bold px-2 py-0.5 rounded-full"
+              class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold"
               >0</span
             >
           </button>
@@ -49,344 +42,575 @@
       </div>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="container mx-auto px-4 py-8">
-      <!-- Banner -->
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6">
+      <!-- Search & Category Bar -->
       <div
-        class="bg-gradient-to-r from-orange-500 to-yellow-500 text-white p-6 rounded-lg shadow-md mb-8 flex justify-between items-center"
+        class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8"
       >
-        <div>
-          <h1 class="text-3xl font-bold">KSTU Electronic Store</h1>
-          <p class="mt-2 text-orange-100">
-            Project အတွက် လိုအပ်တဲ့ ပစ္စည်းတွေကို လွယ်ကူစွာ ဝယ်ယူလိုက်ပါ။
-          </p>
+        <!-- Search Bar -->
+        <div class="w-full md:w-1/3 relative">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="ပစ္စည်းများကို ရှာရန်..."
+            class="w-full pl-10 pr-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+          />
+          <i
+            class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400"
+          ></i>
         </div>
-        <div class="hidden md:block text-5xl">⚡🛠️</div>
+        <!-- Category Bar -->
+        <div
+          id="category-bar"
+          class="flex flex-wrap gap-2 w-full md:w-auto justify-start md:justify-end"
+        >
+          <!-- Dynamic Categories -->
+        </div>
       </div>
 
-      <!-- Section Title -->
-      <div class="flex justify-between items-center mb-6">
+      <!-- Admin Panel (Hidden by default) -->
+      <div
+        id="admin-panel"
+        class="hidden bg-white p-6 rounded-2xl shadow-lg mb-8 border border-indigo-100"
+      >
         <h2
-          class="text-xl font-bold text-gray-800 border-l-4 border-orange-600 pl-3"
+          id="form-title"
+          class="text-xl font-bold mb-4 text-indigo-600 flex items-center gap-2"
         >
-          လူကြိုက်များသော ပစ္စည်းများ
+          <i class="fa-solid fa-circle-plus"></i> ပစ္စည်းအသစ် ထည့်သွင်းရန်
         </h2>
+        <form
+          id="add-product-form"
+          class="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
+          <input
+            type="text"
+            id="new-name"
+            placeholder="ပစ္စည်းနာမည်"
+            required
+            class="border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          <input
+            type="number"
+            id="new-price"
+            placeholder="ဈေးနှုန်း (ကျပ်)"
+            required
+            class="border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+
+          <!-- Category Selection / Addition -->
+          <div class="flex gap-2">
+            <select
+              id="new-category"
+              class="border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 flex-1"
+            >
+              <!-- Dynamic Options -->
+            </select>
+            <button
+              type="button"
+              onclick="addNewCategory()"
+              class="bg-gray-200 hover:bg-gray-300 px-3 py-2.5 rounded-xl text-sm font-medium transition cursor-pointer"
+              title="Category အသစ်ထည့်ရန်"
+            >
+              + အသစ်
+            </button>
+          </div>
+
+          <input
+            type="text"
+            id="new-image"
+            placeholder="ပုံလင့်ခ် (Image URL)"
+            required
+            class="border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          <input
+            type="text"
+            id="new-specs"
+            placeholder="Specs များ (ကော်မာ , ဖြင့် ခွဲရန် ဥပမာ - 8GB RAM, 256GB SSD)"
+            class="border p-2.5 rounded-xl md:col-span-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+
+          <div class="md:col-span-2 flex gap-2">
+            <button
+              type="submit"
+              id="submit-btn"
+              class="flex-1 bg-indigo-600 text-white py-2.5 rounded-xl hover:bg-indigo-700 font-medium transition cursor-pointer"
+            >
+              ပစ္စည်းစာရင်းသို့ ထည့်မည်
+            </button>
+            <button
+              type="button"
+              id="cancel-edit"
+              onclick="resetForm()"
+              class="hidden bg-gray-300 text-gray-700 px-6 py-2.5 rounded-xl hover:bg-gray-400 font-medium transition cursor-pointer"
+            >
+              မလုပ်တော့ပါ
+            </button>
+          </div>
+        </form>
       </div>
 
       <!-- Product Grid -->
       <div
+        id="product-grid"
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
       >
-        <!-- Product 1 -->
-        <div
-          class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200"
-        >
-          <div
-            class="h-48 bg-gray-200 flex items-center justify-center text-gray-500"
-          >
-            <span class="text-4xl">🔌</span>
-          </div>
-          <div class="p-4">
-            <span
-              class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded font-semibold"
-              >Microcontroller</span
-            >
-            <h3 class="product-name font-bold text-gray-800 mt-2 text-lg">
-              Arduino Uno R3
-            </h3>
-            <p
-              class="product-price text-orange-600 font-bold text-xl mt-1"
-              data-price="25000"
-            >
-              25,000 ကျပ်
-            </p>
-            <button
-              class="add-to-cart-btn w-full mt-4 bg-orange-600 hover:bg-orange-700 text-white py-2 rounded-md font-semibold transition"
-            >
-              🛒 Cart ထဲထည့်မည်
-            </button>
-          </div>
-        </div>
-
-        <!-- Product 2 -->
-        <div
-          class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200"
-        >
-          <div
-            class="h-48 bg-gray-200 flex items-center justify-center text-gray-500"
-          >
-            <span class="text-4xl">⚙️</span>
-          </div>
-          <div class="p-4">
-            <span
-              class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded font-semibold"
-              >Motors</span
-            >
-            <h3 class="product-name font-bold text-gray-800 mt-2 text-lg">
-              SG90 Servo Motor
-            </h3>
-            <p
-              class="product-price text-orange-600 font-bold text-xl mt-1"
-              data-price="4500"
-            >
-              4,500 ကျပ်
-            </p>
-            <button
-              class="add-to-cart-btn w-full mt-4 bg-orange-600 hover:bg-orange-700 text-white py-2 rounded-md font-semibold transition"
-            >
-              🛒 Cart ထဲထည့်မည်
-            </button>
-          </div>
-        </div>
-
-        <!-- Product 3 -->
-        <div
-          class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200"
-        >
-          <div
-            class="h-48 bg-gray-200 flex items-center justify-center text-gray-500"
-          >
-            <span class="text-4xl">📡</span>
-          </div>
-          <div class="p-4">
-            <span
-              class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded font-semibold"
-              >Sensors</span
-            >
-            <h3 class="product-name font-bold text-gray-800 mt-2 text-lg">
-              HC-SR04 Ultrasonic
-            </h3>
-            <p
-              class="product-price text-orange-600 font-bold text-xl mt-1"
-              data-price="3500"
-            >
-              3,500 ကျပ်
-            </p>
-            <button
-              class="add-to-cart-btn w-full mt-4 bg-orange-600 hover:bg-orange-700 text-white py-2 rounded-md font-semibold transition"
-            >
-              🛒 Cart ထဲထည့်မည်
-            </button>
-          </div>
-        </div>
-
-        <!-- Product 4 -->
-        <div
-          class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200"
-        >
-          <div
-            class="h-48 bg-gray-200 flex items-center justify-center text-gray-500"
-          >
-            <span class="text-4xl">🧵</span>
-          </div>
-          <div class="p-4">
-            <span
-              class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded font-semibold"
-              >Accessories</span
-            >
-            <h3 class="product-name font-bold text-gray-800 mt-2 text-lg">
-              Jumper Wires (40pcs)
-            </h3>
-            <p
-              class="product-price text-orange-600 font-bold text-xl mt-1"
-              data-price="2000"
-            >
-              2,000 ကျပ်
-            </p>
-            <button
-              class="add-to-cart-btn w-full mt-4 bg-orange-600 hover:bg-orange-700 text-white py-2 rounded-md font-semibold transition"
-            >
-              🛒 Cart ထဲထည့်မည်
-            </button>
-          </div>
-        </div>
+        <!-- JavaScript ဖြင့် ပစ္စည်းများ ဝင်လာမည် -->
       </div>
     </main>
 
-    <!-- Cart Sidebar / Modal -->
+    <!-- Cart & Telegram Checkout Sidebar -->
     <div
-      id="cart-modal"
-      class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-end"
+      id="cart-sidebar"
+      class="fixed inset-y-0 right-0 w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 flex flex-col"
     >
       <div
-        class="bg-white w-full max-w-md h-full p-6 flex flex-col justify-between shadow-xl"
+        class="p-4 bg-indigo-600 text-white flex justify-between items-center"
       >
-        <div>
-          <div class="flex justify-between items-center border-b pb-4">
-            <h3 class="text-xl font-bold text-gray-800">သင်၏ 🛒 Cart စာရင်း</h3>
-            <button
-              id="close-modal"
-              class="text-gray-500 hover:text-gray-800 text-xl font-bold cursor-pointer"
-            >
-              ✕
-            </button>
-          </div>
-          <!-- Cart Items List -->
-          <div
-            id="cart-items-container"
-            class="mt-4 space-y-3 overflow-y-auto max-h-[40vh]"
-          >
-            <p class="text-gray-500 text-center py-8">
-              Cart ထဲတွင် ပစ္စည်းမရှိသေးပါ။
-            </p>
-          </div>
+        <h2 class="font-bold text-lg flex items-center gap-2">
+          <i class="fa-solid fa-cart-shopping"></i> သင်၏ Cart နှင့် Order တင်ရန်
+        </h2>
+        <button
+          id="close-cart"
+          class="text-white hover:text-gray-200 text-xl cursor-pointer"
+        >
+          &times;
+        </button>
+      </div>
+
+      <!-- Cart Items List -->
+      <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3">
+        <!-- Cart Items -->
+      </div>
+
+      <!-- Customer Details Form for Telegram Checkout -->
+      <div class="p-4 border-t bg-gray-50 space-y-3">
+        <h3 class="font-bold text-sm text-gray-700">
+          မှာယူမည့်သူ၏ အချက်အလက်များ:
+        </h3>
+        <input
+          type="text"
+          id="customer-name"
+          placeholder="အမည် (Name)"
+          class="w-full p-2 border rounded-lg text-sm bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        />
+        <input
+          type="text"
+          id="customer-phone"
+          placeholder="ဖုန်းနံပါတ် (Phone Number)"
+          class="w-full p-2 border rounded-lg text-sm bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        />
+        <textarea
+          id="customer-address"
+          placeholder="ပို့ဆောင်ရမည့် လိပ်စာ (Address)"
+          rows="2"
+          class="w-full p-2 border rounded-lg text-sm bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        ></textarea>
+
+        <div class="flex justify-between font-bold text-base pt-2">
+          <span>စုစုပေါင်းကျသင့်ငွေ:</span>
+          <span id="cart-total" class="text-indigo-600">0 ကျပ်</span>
         </div>
 
-        <!-- Checkout Form & Total -->
-        <div class="border-t pt-4 space-y-3">
-          <div>
-            <label class="block text-sm font-semibold text-gray-700"
-              >အမည် / ကျောင်းနှစ်:</label
-            >
-            <input
-              type="text"
-              id="customer-name"
-              placeholder="ဥပမာ - Maung Maung (4th Year EC)"
-              class="w-full mt-1 px-3 py-2 border rounded-md text-sm focus:outline-none focus:border-orange-500"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-semibold text-gray-700"
-              >ဆောင်/ဆက်သွယ်ရန် ဖုန်းနံပါတ်:</label
-            >
-            <input
-              type="text"
-              id="customer-phone"
-              placeholder="ဥပမာ - 09xxxxxxxxx"
-              class="w-full mt-1 px-3 py-2 border rounded-md text-sm focus:outline-none focus:border-orange-500"
-            />
-          </div>
+        <button
+          onclick="checkoutTelegram()"
+          class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-md"
+        >
+          <i class="fa-brands fa-telegram text-xl"></i> Telegram ဖြင့် Order
+          တင်မည်
+        </button>
+      </div>
+    </div>
 
-          <div
-            class="flex justify-between text-lg font-bold text-gray-800 pt-2 border-t"
-          >
-            <span>စုစုပေါင်းကျသင့်ငွေ:</span>
-            <span id="total-price" class="text-orange-600">0 ကျပ်</span>
-          </div>
-          <button
-            id="checkout-btn"
-            class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-md font-bold transition cursor-pointer"
-          >
-            📲 Telegram ဖြင့် Order တင်မည်
-          </button>
+    <!-- Product Details Modal -->
+    <div
+      id="product-modal"
+      class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4"
+    >
+      <div class="bg-white rounded-2xl max-w-lg w-full p-6 relative shadow-2xl">
+        <button
+          id="close-modal"
+          class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl cursor-pointer"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div id="modal-content">
+          <!-- Modal Dynamic Content -->
         </div>
       </div>
     </div>
 
-    <!-- JavaScript ပိုင်း -->
+    <!-- JavaScript Application Logic -->
     <script>
+      let defaultProducts = [
+        {
+          name: "Smart Watch Pro",
+          price: 45000,
+          category: "Accessories",
+          image:
+            "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500",
+          specs: [
+            "Bluetooth 5.2",
+            "Heart Rate Monitor",
+            "Water Resistant 5ATM",
+            "Battery Life: 7 Days",
+          ],
+        },
+        {
+          name: "Wireless Earbuds",
+          price: 30000,
+          category: "Electronics",
+          image:
+            "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500",
+          specs: [
+            "Active Noise Cancellation",
+            "Touch Controls",
+            "Type-C Fast Charging",
+            "Hi-Fi Sound Quality",
+          ],
+        },
+      ];
+
+      let defaultCategories = ["Electronics", "Fashion", "Accessories"];
+
+      let products =
+        JSON.parse(localStorage.getItem("kstu_products")) || defaultProducts;
+      let categories =
+        JSON.parse(localStorage.getItem("kstu_categories")) ||
+        defaultCategories;
       let cart = [];
+      let currentCategory = "All";
+      let editingIndex = -1;
+
+      const productGrid = document.getElementById("product-grid");
       const cartCount = document.getElementById("cart-count");
-      const cartBtn = document.getElementById("cart-btn");
-      const cartModal = document.getElementById("cart-modal");
-      const closeModal = document.getElementById("close-modal");
-      const cartItemsContainer = document.getElementById(
-        "cart-items-container",
-      );
-      const totalPriceEl = document.getElementById("total-price");
-      const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
-      const checkoutBtn = document.getElementById("checkout-btn");
+      const cartItems = document.getElementById("cart-items");
+      const cartTotal = document.getElementById("cart-total");
+      const cartSidebar = document.getElementById("cart-sidebar");
+      const adminPanel = document.getElementById("admin-panel");
+      const productModal = document.getElementById("product-modal");
+      const modalContent = document.getElementById("modal-content");
+      const categoryBar = document.getElementById("category-bar");
+      const newCategorySelect = document.getElementById("new-category");
 
-      // ပစ္စည်းထည့်မည်ခလုတ်နှိပ်ခြင်း
-      addToCartButtons.forEach((button) => {
-        button.addEventListener("click", (e) => {
-          const productCard = e.target.closest(".bg-white");
-          const name = productCard.querySelector(".product-name").textContent;
-          const priceEl = productCard.querySelector(".product-price");
-          const price = parseInt(priceEl.getAttribute("data-price"));
-
-          cart.push({ name, price });
-          updateCartUI();
-          alert(name + " ကို Cart ထဲသို့ ထည့်ပြီးပါပြီ!");
-        });
-      });
-
-      // Cart UI Update လုပ်ရန်
-      function updateCartUI() {
-        cartCount.textContent = cart.length;
-
-        if (cart.length === 0) {
-          cartItemsContainer.innerHTML =
-            '<p class="text-gray-500 text-center py-8">Cart ထဲတွင် ပစ္စည်းမရှိသေးပါ။</p>';
-          totalPriceEl.textContent = "0 ကျပ်";
-          return;
-        }
-
-        cartItemsContainer.innerHTML = "";
-        let total = 0;
-
-        cart.forEach((item, index) => {
-          total += item.price;
-          const itemDiv = document.createElement("div");
-          itemDiv.className =
-            "flex justify-between items-center bg-gray-50 p-3 rounded-md border";
-          itemDiv.innerHTML = `
-                    <div>
-                        <h4 class="font-semibold text-gray-800">${item.name}</h4>
-                        <p class="text-sm text-orange-600">${item.price.toLocaleString()} ကျပ်</p>
-                    </div>
-                    <button onclick="removeItem(${index})" class="text-red-500 hover:text-red-700 text-sm font-bold cursor-pointer">ဖယ်မည်</button>
-                `;
-          cartItemsContainer.appendChild(itemDiv);
+      // Render Categories
+      function renderCategories() {
+        categoryBar.innerHTML = `<button data-category="All" class="cat-btn px-4 py-2 rounded-xl text-sm font-medium ${currentCategory === "All" ? "bg-indigo-600 text-white" : "bg-white text-gray-600 border"} transition cursor-pointer">အားလုံး</button>`;
+        categories.forEach((cat) => {
+          const isActive = currentCategory === cat;
+          const btn = document.createElement("button");
+          btn.className = `cat-btn px-4 py-2 rounded-xl text-sm font-medium ${isActive ? "bg-indigo-600 text-white" : "bg-white text-gray-600 border hover:bg-gray-100"} transition cursor-pointer`;
+          btn.setAttribute("data-category", cat);
+          btn.textContent = cat;
+          categoryBar.appendChild(btn);
         });
 
-        totalPriceEl.textContent = total.toLocaleString() + " ကျပ်";
+        newCategorySelect.innerHTML = "";
+        categories.forEach((cat) => {
+          const opt = document.createElement("option");
+          opt.value = cat;
+          opt.textContent = cat;
+          newCategorySelect.appendChild(opt);
+        });
+
+        document.querySelectorAll(".cat-btn").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            currentCategory = e.target.getAttribute("data-category");
+            filterProducts();
+            renderCategories();
+          });
+        });
       }
 
-      // ပစ္စည်းဖယ်ရှားရန်
-      window.removeItem = function (index) {
+      // Add New Category
+      function addNewCategory() {
+        const newCat = prompt("Category အသစ်အမည် ထည့်ပါ:");
+        if (newCat && newCat.trim() !== "") {
+          const formattedCat = newCat.trim();
+          if (!categories.includes(formattedCat)) {
+            categories.push(formattedCat);
+            localStorage.setItem("kstu_categories", JSON.stringify(categories));
+            renderCategories();
+            newCategorySelect.value = formattedCat;
+            alert("Category အသစ် ထည့်သွင်းပြီးပါပြီ!");
+          } else {
+            alert("ဤ Category သည် ရှိနှင့်ပြီးသား ဖြစ်ပါသည်။");
+          }
+        }
+      }
+
+      // Render Products
+      function renderProducts(items) {
+        productGrid.innerHTML = "";
+        if (items.length === 0) {
+          productGrid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-8">ပစ္စည်း မရှိသေးပါ။</p>`;
+          return;
+        }
+        items.forEach((prod, index) => {
+          const originalIndex = products.findIndex(
+            (p) => p.name === prod.name && p.price === prod.price,
+          );
+
+          const card = document.createElement("div");
+          card.className =
+            "bg-white rounded-2xl shadow hover:shadow-lg transition p-4 flex flex-col justify-between border border-gray-100 relative group";
+          card.innerHTML = `
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl mb-3 cursor-pointer" onclick="openProductModal(${originalIndex})">
+                            <img src="${prod.image}" alt="${prod.name}" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+                            <span class="absolute top-2 left-2 bg-indigo-600 text-white text-xs px-2.5 py-1 rounded-full">${prod.category}</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-1 cursor-pointer hover:text-indigo-600 transition" onclick="openProductModal(${originalIndex})">${prod.name}</h3>
+                        <p class="text-indigo-600 font-bold mb-3">${prod.price.toLocaleString()} ကျပ်</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="addToCart(${originalIndex})" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl text-sm font-medium hover:bg-indigo-700 transition flex items-center justify-center gap-1 cursor-pointer">
+                            <i class="fa-solid fa-cart-plus"></i> ဝယ်မည်
+                        </button>
+                        <button onclick="editProduct(${originalIndex})" class="bg-amber-100 text-amber-700 px-3 py-2 rounded-xl hover:bg-amber-200 transition cursor-pointer" title="ပြင်ဆင်ရန်">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button onclick="deleteProduct(${originalIndex})" class="bg-red-100 text-red-600 px-3 py-2 rounded-xl hover:bg-red-200 transition cursor-pointer" title="ဖျက်ရန်">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+          productGrid.appendChild(card);
+        });
+      }
+
+      // Filter & Search
+      function filterProducts() {
+        const searchText = document
+          .getElementById("search-input")
+          .value.toLowerCase();
+        const filtered = products.filter((prod) => {
+          const matchesCategory =
+            currentCategory === "All" || prod.category === currentCategory;
+          const matchesSearch = prod.name.toLowerCase().includes(searchText);
+          return matchesCategory && matchesSearch;
+        });
+        renderProducts(filtered);
+      }
+
+      document
+        .getElementById("search-input")
+        .addEventListener("input", filterProducts);
+
+      // Edit Product
+      function editProduct(index) {
+        const prod = products[index];
+        document.getElementById("new-name").value = prod.name;
+        document.getElementById("new-price").value = prod.price;
+        document.getElementById("new-category").value = prod.category;
+        document.getElementById("new-image").value = prod.image;
+        document.getElementById("new-specs").value = prod.specs
+          ? prod.specs.join(", ")
+          : "";
+
+        editingIndex = index;
+        document.getElementById("form-title").innerHTML =
+          `<i class="fa-solid fa-pen-to-square"></i> ပစ္စည်းအချက်အလက် ပြင်ဆင်ရန်`;
+        document.getElementById("submit-btn").textContent =
+          `ပြင်ဆင်မှု သိမ်းဆည်းမည်`;
+        document.getElementById("cancel-edit").classList.remove("hidden");
+
+        adminPanel.classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // Reset Form
+      function resetForm() {
+        editingIndex = -1;
+        document.getElementById("add-product-form").reset();
+        document.getElementById("form-title").innerHTML =
+          `<i class="fa-solid fa-circle-plus"></i> ပစ္စည်းအသစ် ထည့်သွင်းရန်`;
+        document.getElementById("submit-btn").textContent =
+          `ပစ္စည်းစာရင်းသို့ ထည့်မည်`;
+        document.getElementById("cancel-edit").classList.add("hidden");
+        adminPanel.classList.add("hidden");
+      }
+
+      // Add or Update Product
+      document
+        .getElementById("add-product-form")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          const name = document.getElementById("new-name").value.trim();
+          const price = parseInt(document.getElementById("new-price").value);
+          const category = document.getElementById("new-category").value;
+          const image = document.getElementById("new-image").value.trim();
+          const specsInput = document.getElementById("new-specs").value.trim();
+          let specs = specsInput
+            ? specsInput.split(",").map((s) => s.trim())
+            : ["Standard Quality Component"];
+
+          if (editingIndex === -1) {
+            products.push({ name, price, category, image, specs });
+            alert("ပစ္စည်းအသစ်ကို အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ! 🎉");
+          } else {
+            products[editingIndex] = { name, price, category, image, specs };
+            alert("ပစ္စည်းအချက်အလက်များကို အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ! ✅");
+            resetForm();
+          }
+
+          localStorage.setItem("kstu_products", JSON.stringify(products));
+          filterProducts();
+          document.getElementById("add-product-form").reset();
+          adminPanel.classList.add("hidden");
+        });
+
+      // Delete Product
+      function deleteProduct(index) {
+        if (confirm("ဤပစ္စည်းကို ဖျက်ရန် သေချာပါသလား?")) {
+          products.splice(index, 1);
+          localStorage.setItem("kstu_products", JSON.stringify(products));
+          filterProducts();
+        }
+      }
+
+      // Product Modal
+      function openProductModal(index) {
+        const prod = products[index];
+        let specsHtml = prod.specs
+          ? prod.specs
+              .map(
+                (s) =>
+                  `<li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-600 text-xs"></i> ${s}</li>`,
+              )
+              .join("")
+          : "<li>အချက်အလက် မရှိသေးပါ။</li>";
+
+        modalContent.innerHTML = `
+                <img src="${prod.image}" alt="${prod.name}" class="w-full h-56 object-cover rounded-xl mb-4">
+                <span class="bg-indigo-100 text-indigo-600 text-xs px-2.5 py-1 rounded-full font-medium">${prod.category}</span>
+                <h2 class="text-2xl font-bold mt-2 mb-1">${prod.name}</h2>
+                <p class="text-xl font-bold text-indigo-600 mb-4">${prod.price.toLocaleString()} ကျပ်</p>
+                <div class="mb-6">
+                    <h4 class="font-bold text-gray-700 mb-2">အသေးစိတ် အချက်အလက်များ (Specifications):</h4>
+                    <ul class="space-y-1.5 text-sm text-gray-600 bg-gray-50 p-3 rounded-xl">
+                        ${specsHtml}
+                    </ul>
+                </div>
+                <button onclick="addToCart(${index}); productModal.classList.add('hidden');" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition cursor-pointer">
+                    Cart ထဲသို့ ထည့်မည်
+                </button>
+            `;
+        productModal.classList.remove("hidden");
+      }
+
+      document
+        .getElementById("close-modal")
+        .addEventListener("click", () => productModal.classList.add("hidden"));
+      document
+        .getElementById("admin-toggle-btn")
+        .addEventListener("click", () => adminPanel.classList.toggle("hidden"));
+
+      // Cart Functions
+      function addToCart(index) {
+        const prod = products[index];
+        const existing = cart.find((item) => item.name === prod.name);
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          cart.push({ ...prod, qty: 1 });
+        }
+        updateCartUI();
+        alert("ပစ္စည်းကို Cart ထဲသို့ ထည့်ပြီးပါပြီ!");
+      }
+
+      function updateCartUI() {
+        cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+        cartItems.innerHTML = "";
+        let total = 0;
+
+        if (cart.length === 0) {
+          cartItems.innerHTML = `<p class="text-gray-500 text-center py-4 text-sm">Cart ထဲတွင် ပစ္စည်းမရှိသေးပါ။</p>`;
+        }
+
+        cart.forEach((item, index) => {
+          total += item.price * item.qty;
+          const div = document.createElement("div");
+          div.className =
+            "flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-100";
+          div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${item.image}" class="w-12 h-12 object-cover rounded-lg">
+                        <div>
+                            <h4 class="font-bold text-sm">${item.name}</h4>
+                            <p class="text-xs text-gray-500">${item.price.toLocaleString()} ကျပ် x ${item.qty}</p>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700 cursor-pointer p-1"><i class="fa-solid fa-trash-can"></i></button>
+                `;
+          cartItems.appendChild(div);
+        });
+        cartTotal.textContent = total.toLocaleString() + " ကျပ်";
+      }
+
+      function removeFromCart(index) {
         cart.splice(index, 1);
         updateCartUI();
-      };
+      }
 
-      // Modal ဖွင့်/ပိတ်
-      cartBtn.addEventListener("click", () => {
-        cartModal.classList.remove("hidden");
-      });
-      closeModal.addEventListener("click", () => {
-        cartModal.classList.add("hidden");
-      });
+      document
+        .getElementById("cart-btn")
+        .addEventListener("click", () =>
+          cartSidebar.classList.remove("translate-x-full"),
+        );
+      document
+        .getElementById("close-cart")
+        .addEventListener("click", () =>
+          cartSidebar.classList.add("translate-x-full"),
+        );
 
-      // Telegram သို့ Order ပို့မည့် စနစ်
-      checkoutBtn.addEventListener("click", () => {
+      // Telegram Checkout Function
+      function checkoutTelegram() {
         if (cart.length === 0) {
-          alert("ကျေးဇူးပြု၍ Cart ထဲသို့ ပစ္စည်း အနည်းဆုံး တစ်ခု ထည့်ပါ။");
+          alert("ကျေးဇူးပြု၍ Cart ထဲသို့ ပစ္စည်း အရင်ထည့်ပါ။");
           return;
         }
 
         const name = document.getElementById("customer-name").value.trim();
         const phone = document.getElementById("customer-phone").value.trim();
+        const address = document
+          .getElementById("customer-address")
+          .value.trim();
 
         if (!name || !phone) {
-          alert("ကျေးဇူးပြု၍ အမည်နှင့် ဖုန်းနံပါတ် ဖြည့်ပေးပါ။");
+          alert("ကျေးဇူးပြု၍ ဝယ်သူ၏ အမည်နှင့် ဖုန်းနံပါတ်ကို ဖြည့်စွက်ပေးပါ။");
           return;
         }
 
-        let orderText = `🛒 *KSTU Store Order အသစ်*\n\n`;
-        orderText += `👤 *ဝယ်သူ:* ${name}\n`;
-        orderText += `📞 *ဖုန်း:* ${phone}\n\n`;
-        orderText += `📦 *ဝယ်ယူသည့်ပစ္စည်းများ:*\n`;
+        let message = `🛒 *KSTU Store မှ Order အသစ်ဝင်ပါသည်*%0A`;
+        message += `-----------------------------------%0A`;
+        message += `👤 *အမည်:* ${name}%0A`;
+        message += `📞 *ဖုန်းနံပါတ်:* ${phone}%0A`;
+        message += `🏠 *လိပ်စာ:* ${address || "မပါရှိပါ"}%0A`;
+        message += `-----------------------------------%0A`;
+        message += `📦 *ဝယ်ယူသည့် ပစ္စည်းများ:*%0A`;
 
         let total = 0;
-        cart.forEach((item, i) => {
-          orderText += `${i + 1}. ${item.name} - ${item.price.toLocaleString()} ကျပ်\n`;
-          total += item.price;
+        cart.forEach((item, index) => {
+          let itemTotal = item.price * item.qty;
+          total += itemTotal;
+          message += `${index + 1}. ${item.name} (${item.qty} ခု) - ${itemTotal.toLocaleString()} ကျပ်%0A`;
         });
 
-        orderText += `\n💰 *စုစုပေါင်းကျသင့်ငွေ:* ${total.toLocaleString()} ကျပ်`;
+        message += `-----------------------------------%0A`;
+        message += `💰 *စုစုပေါင်းကျသင့်ငွေ:* ${total.toLocaleString()} ကျပ်`;
 
-        // ကိုယ့်ရဲ့ Telegram Username (သို့) Bot Chat Link (ဥပမာ - Telegram Username ကို 'your_username' နေရာတွင် ထည့်ပါ)
-        const myTelegramUsername = "Friend676"; // ကိုယ့်ရဲ့ Telegram username နဲ့ ချိတ်ရန်
+        // သတိပြုရန်: 'Friend676' နေရာတွင် သင်၏ တကယ်သုံးနေသော Telegram Username ကို ထည့်ထားပါ (@ မပါစေရ)
+        const myTelegramUsername = "Friend676";
+        const telegramUrl = `https://t.me/${myTelegramUsername}?text=${message}`;
 
-        // Telegram URL encode လုပ်ခြင်း
-        const encodedText = encodeURIComponent(orderText);
-
-        // Telegram chat သို့မဟုတ် Telegram Bot သို့ တိုက်ရိုက်ပို့မည့် Link
-        const telegramUrl = `https://t.me/${myTelegramUsername}?text=${encodedText}`;
-
-        // Window အသစ်ဖြင့် ဖွင့်မည်
         window.open(telegramUrl, "_blank");
-      });
+      }
+
+      // Initial Render
+      renderCategories();
+      renderProducts(products);
     </script>
   </body>
 </html>
