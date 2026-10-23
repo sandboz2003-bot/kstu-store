@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KSTU Store - Cloud Database</title>
+    <title>KSTU Store - Cloud Database & Categories</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link
       rel="stylesheet"
@@ -109,10 +109,24 @@
               id="new-category"
               class="border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 flex-1"
             >
-              <option value="Electronics">Electronics</option>
-              <option value="Fashion">Fashion</option>
-              <option value="Accessories">Accessories</option>
+              <!-- Dynamic Options -->
             </select>
+            <button
+              type="button"
+              onclick="addNewCategory()"
+              class="bg-gray-200 hover:bg-gray-300 px-3 py-2.5 rounded-xl text-sm font-medium transition cursor-pointer"
+              title="Category အသစ်ထည့်ရန်"
+            >
+              + အသစ်
+            </button>
+            <button
+              type="button"
+              onclick="deleteCurrentCategory()"
+              class="bg-red-100 hover:bg-red-200 text-red-600 px-3 py-2.5 rounded-xl text-sm font-medium transition cursor-pointer"
+              title="ရွေးထားသော Category ကို ဖျက်ရန်"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
           </div>
 
           <input
@@ -287,6 +301,8 @@
         updateDoc,
         deleteDoc,
         doc,
+        setDoc,
+        getDoc,
       } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -307,7 +323,7 @@
       let categories = ["Electronics", "Fashion", "Accessories"];
       let cart = [];
       let currentCategory = "All";
-      let editingId = null; // Firestore Document ID for editing
+      let editingId = null;
       let isAdminLoggedIn = false;
 
       const productGrid = document.getElementById("product-grid");
@@ -319,10 +335,34 @@
       const productModal = document.getElementById("product-modal");
       const modalContent = document.getElementById("modal-content");
       const categoryBar = document.getElementById("category-bar");
+      const newCategorySelect = document.getElementById("new-category");
       const adminToggleBtn = document.getElementById("admin-toggle-btn");
       const loginModal = document.getElementById("login-modal");
 
-      // Fetch Products from Firestore Database
+      // Fetch Categories from Firestore
+      async function fetchCategories() {
+        try {
+          const catDoc = await getDoc(doc(db, "settings", "categories"));
+          if (catDoc.exists()) {
+            categories = catDoc.data().list || [
+              "Electronics",
+              "Fashion",
+              "Accessories",
+            ];
+          } else {
+            // Initialize default categories in Firestore if not exist
+            await setDoc(doc(db, "settings", "categories"), {
+              list: categories,
+            });
+          }
+          renderCategories();
+        } catch (error) {
+          console.error("Error fetching categories: ", error);
+          renderCategories();
+        }
+      }
+
+      // Fetch Products from Firestore
       async function fetchProducts() {
         try {
           const querySnapshot = await getDocs(collection(db, "products"));
@@ -374,6 +414,7 @@
         else adminPanel.classList.toggle("hidden");
       });
 
+      // Render Categories
       function renderCategories() {
         categoryBar.innerHTML = `<button data-category="All" class="cat-btn px-4 py-2 rounded-xl text-sm font-medium ${currentCategory === "All" ? "bg-indigo-600 text-white" : "bg-white text-gray-600 border"} transition cursor-pointer">အားလုံး</button>`;
         categories.forEach((cat) => {
@@ -384,6 +425,15 @@
           btn.textContent = cat;
           categoryBar.appendChild(btn);
         });
+
+        newCategorySelect.innerHTML = "";
+        categories.forEach((cat) => {
+          const opt = document.createElement("option");
+          opt.value = cat;
+          opt.textContent = cat;
+          newCategorySelect.appendChild(opt);
+        });
+
         document.querySelectorAll(".cat-btn").forEach((btn) => {
           btn.addEventListener("click", (e) => {
             currentCategory = e.target.getAttribute("data-category");
@@ -392,6 +442,49 @@
           });
         });
       }
+
+      window.addNewCategory = async function () {
+        if (!isAdminLoggedIn) return;
+        const newCat = prompt("Category အသစ်အမည် ထည့်ပါ:");
+        if (newCat && newCat.trim() !== "") {
+          const formattedCat = newCat.trim();
+          if (!categories.includes(formattedCat)) {
+            categories.push(formattedCat);
+            try {
+              await setDoc(doc(db, "settings", "categories"), {
+                list: categories,
+              });
+              renderCategories();
+              newCategorySelect.value = formattedCat;
+              alert("Category အသစ် Cloud သို့ ထည့်သွင်းပြီးပါပြီ!");
+            } catch (error) {
+              alert("Error: " + error.message);
+            }
+          } else {
+            alert("ဤ Category သည် ရှိနှင့်ပြီးသား ဖြစ်ပါသည်။");
+          }
+        }
+      };
+
+      window.deleteCurrentCategory = async function () {
+        if (!isAdminLoggedIn) return;
+        const selectedCat = newCategorySelect.value;
+        if (!selectedCat) return;
+        if (confirm(`"${selectedCat}" Category ကို ဖျက်ရန် သေချာပါသလား?`)) {
+          categories = categories.filter((cat) => cat !== selectedCat);
+          try {
+            await setDoc(doc(db, "settings", "categories"), {
+              list: categories,
+            });
+            if (currentCategory === selectedCat) currentCategory = "All";
+            renderCategories();
+            filterProducts();
+            alert("Category ကို ဖျက်ပြီးပါပြီ။");
+          } catch (error) {
+            alert("Error: " + error.message);
+          }
+        }
+      };
 
       function renderProducts(items) {
         productGrid.innerHTML = "";
@@ -658,7 +751,7 @@
       };
 
       // Initial Load
-      renderCategories();
+      fetchCategories();
       fetchProducts();
     </script>
   </body>
