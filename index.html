@@ -25,7 +25,7 @@
             id="admin-toggle-btn"
             class="bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg text-sm font-medium transition flex items-center gap-1 cursor-pointer"
           >
-            <i class="fa-solid fa-gear"></i> Admin Panel
+            <i class="fa-solid fa-lock"></i> Admin Login
           </button>
           <button
             id="cart-btn"
@@ -48,7 +48,6 @@
       <div
         class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8"
       >
-        <!-- Search Bar -->
         <div class="w-full md:w-1/3 relative">
           <input
             type="text"
@@ -60,7 +59,6 @@
             class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400"
           ></i>
         </div>
-        <!-- Category Bar -->
         <div
           id="category-bar"
           class="flex flex-wrap gap-2 w-full md:w-auto justify-start md:justify-end"
@@ -69,17 +67,25 @@
         </div>
       </div>
 
-      <!-- Admin Panel (Hidden by default) -->
+      <!-- Admin Panel (Hidden by default, Firebase Protected) -->
       <div
         id="admin-panel"
         class="hidden bg-white p-6 rounded-2xl shadow-lg mb-8 border border-indigo-100"
       >
-        <h2
-          id="form-title"
-          class="text-xl font-bold mb-4 text-indigo-600 flex items-center gap-2"
-        >
-          <i class="fa-solid fa-circle-plus"></i> ပစ္စည်းအသစ် ထည့်သွင်းရန်
-        </h2>
+        <div class="flex justify-between items-center mb-4">
+          <h2
+            id="form-title"
+            class="text-xl font-bold text-indigo-600 flex items-center gap-2"
+          >
+            <i class="fa-solid fa-circle-plus"></i> ပစ္စည်းအသစ် ထည့်သွင်းရန်
+          </h2>
+          <button
+            onclick="logoutAdmin()"
+            class="bg-red-50 text-red-600 px-3 py-1.5 rounded-lg text-sm hover:bg-red-100 transition cursor-pointer"
+          >
+            Logout ထွက်မည်
+          </button>
+        </div>
         <form
           id="add-product-form"
           class="grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -99,7 +105,6 @@
             class="border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
 
-          <!-- Category Selection / Addition -->
           <div class="flex gap-2">
             <select
               id="new-category"
@@ -114,6 +119,14 @@
               title="Category အသစ်ထည့်ရန်"
             >
               + အသစ်
+            </button>
+            <button
+              type="button"
+              onclick="deleteCurrentCategory()"
+              class="bg-red-100 hover:bg-red-200 text-red-600 px-3 py-2.5 rounded-xl text-sm font-medium transition cursor-pointer"
+              title="ရွေးထားသော Category ကို ဖျက်ရန်"
+            >
+              <i class="fa-solid fa-trash"></i>
             </button>
           </div>
 
@@ -160,6 +173,50 @@
       </div>
     </main>
 
+    <!-- Admin Login Modal -->
+    <div
+      id="login-modal"
+      class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4"
+    >
+      <div class="bg-white rounded-2xl max-w-sm w-full p-6 relative shadow-2xl">
+        <button
+          onclick="
+            document.getElementById('login-modal').classList.add('hidden')
+          "
+          class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl cursor-pointer"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <h2
+          class="text-xl font-bold text-indigo-600 mb-4 flex items-center gap-2"
+        >
+          <i class="fa-solid fa-lock"></i> Admin Login
+        </h2>
+        <form id="login-form" class="space-y-4">
+          <input
+            type="email"
+            id="admin-email"
+            placeholder="Admin Email"
+            required
+            class="w-full border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          <input
+            type="password"
+            id="admin-password"
+            placeholder="Password"
+            required
+            class="w-full border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          <button
+            type="submit"
+            class="w-full bg-indigo-600 text-white py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition cursor-pointer"
+          >
+            Login ဝင်မည်
+          </button>
+        </form>
+      </div>
+    </div>
+
     <!-- Cart & Telegram Checkout Sidebar -->
     <div
       id="cart-sidebar"
@@ -179,12 +236,10 @@
         </button>
       </div>
 
-      <!-- Cart Items List -->
       <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3">
         <!-- Cart Items -->
       </div>
 
-      <!-- Customer Details Form for Telegram Checkout -->
       <div class="p-4 border-t bg-gray-50 space-y-3">
         <h3 class="font-bold text-sm text-gray-700">
           မှာယူမည့်သူ၏ အချက်အလက်များ:
@@ -235,14 +290,33 @@
         >
           <i class="fa-solid fa-xmark"></i>
         </button>
-        <div id="modal-content">
-          <!-- Modal Dynamic Content -->
-        </div>
+        <div id="modal-content"></div>
       </div>
     </div>
 
-    <!-- JavaScript Application Logic -->
-    <script>
+    <!-- Firebase SDKs (Modular) -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import {
+        getAuth,
+        signInWithEmailAndPassword,
+        signOut,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyAXIF6lA63sXZGSlHjqcVui16dyVfw-lB0",
+        authDomain: "kstu-store.firebaseapp.com",
+        projectId: "kstu-store",
+        storageBucket: "kstu-store.firebasestorage.app",
+        messagingSenderId: "713367176185",
+        appId: "1:713367176185:web:0fcfbf4dad0fdf05e2f328",
+        measurementId: "G-JTXMYFM5ZQ",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
       let defaultProducts = [
         {
           name: "Smart Watch Pro",
@@ -282,6 +356,7 @@
       let cart = [];
       let currentCategory = "All";
       let editingIndex = -1;
+      let isAdminLoggedIn = false;
 
       const productGrid = document.getElementById("product-grid");
       const cartCount = document.getElementById("cart-count");
@@ -293,6 +368,57 @@
       const modalContent = document.getElementById("modal-content");
       const categoryBar = document.getElementById("category-bar");
       const newCategorySelect = document.getElementById("new-category");
+      const adminToggleBtn = document.getElementById("admin-toggle-btn");
+      const loginModal = document.getElementById("login-modal");
+
+      // Check Firebase Auth State
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          isAdminLoggedIn = true;
+          adminToggleBtn.innerHTML = `<i class="fa-solid fa-unlock"></i> Admin Panel`;
+          adminToggleBtn.className =
+            "bg-green-100 text-green-700 px-3 py-2 rounded-lg text-sm font-medium transition flex items-center gap-1 cursor-pointer";
+          loginModal.classList.add("hidden");
+          adminPanel.classList.remove("hidden");
+          renderProducts(products);
+        } else {
+          isAdminLoggedIn = false;
+          adminToggleBtn.innerHTML = `<i class="fa-solid fa-lock"></i> Admin Login`;
+          adminToggleBtn.className =
+            "bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg text-sm font-medium transition flex items-center gap-1 cursor-pointer";
+          adminPanel.classList.add("hidden");
+          renderProducts(products);
+        }
+      });
+
+      // Login Form Submit
+      document.getElementById("login-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = document.getElementById("admin-email").value;
+        const password = document.getElementById("admin-password").value;
+
+        signInWithEmailAndPassword(auth, email, password)
+          .then(() => {
+            alert("Admin အဖြစ် အောင်မြင်စွာ ဝင်ရောက်ပြီးပါပြီ! 🎉");
+          })
+          .catch((error) => {
+            alert("Login ဝင်၍ မရပါ: " + error.message);
+          });
+      });
+
+      window.logoutAdmin = function () {
+        signOut(auth).then(() => {
+          alert("Admin အကောင့်မှ ထွက်လိုက်ပါပြီ။");
+        });
+      };
+
+      adminToggleBtn.addEventListener("click", () => {
+        if (!isAdminLoggedIn) {
+          loginModal.classList.remove("hidden");
+        } else {
+          adminPanel.classList.toggle("hidden");
+        }
+      });
 
       // Render Categories
       function renderCategories() {
@@ -323,8 +449,8 @@
         });
       }
 
-      // Add New Category
-      function addNewCategory() {
+      window.addNewCategory = function () {
+        if (!isAdminLoggedIn) return;
         const newCat = prompt("Category အသစ်အမည် ထည့်ပါ:");
         if (newCat && newCat.trim() !== "") {
           const formattedCat = newCat.trim();
@@ -338,9 +464,21 @@
             alert("ဤ Category သည် ရှိနှင့်ပြီးသား ဖြစ်ပါသည်။");
           }
         }
-      }
+      };
 
-      // Render Products
+      window.deleteCurrentCategory = function () {
+        if (!isAdminLoggedIn) return;
+        const selectedCat = newCategorySelect.value;
+        if (!selectedCat) return;
+        if (confirm(`"${selectedCat}" Category ကို ဖျက်ရန် သေချာပါသလား?`)) {
+          categories = categories.filter((cat) => cat !== selectedCat);
+          localStorage.setItem("kstu_categories", JSON.stringify(categories));
+          if (currentCategory === selectedCat) currentCategory = "All";
+          renderCategories();
+          filterProducts();
+        }
+      };
+
       function renderProducts(items) {
         productGrid.innerHTML = "";
         if (items.length === 0) {
@@ -351,10 +489,22 @@
           const originalIndex = products.findIndex(
             (p) => p.name === prod.name && p.price === prod.price,
           );
-
           const card = document.createElement("div");
           card.className =
             "bg-white rounded-2xl shadow hover:shadow-lg transition p-4 flex flex-col justify-between border border-gray-100 relative group";
+
+          let adminButtonsHtml = "";
+          if (isAdminLoggedIn) {
+            adminButtonsHtml = `
+                        <button onclick="editProduct(${originalIndex})" class="bg-amber-100 text-amber-700 px-3 py-2 rounded-xl hover:bg-amber-200 transition cursor-pointer" title="ပြင်ဆင်ရန်">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button onclick="deleteProduct(${originalIndex})" class="bg-red-100 text-red-600 px-3 py-2 rounded-xl hover:bg-red-200 transition cursor-pointer" title="ဖျက်ရန်">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    `;
+          }
+
           card.innerHTML = `
                     <div>
                         <div class="relative overflow-hidden rounded-xl mb-3 cursor-pointer" onclick="openProductModal(${originalIndex})">
@@ -368,19 +518,13 @@
                         <button onclick="addToCart(${originalIndex})" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl text-sm font-medium hover:bg-indigo-700 transition flex items-center justify-center gap-1 cursor-pointer">
                             <i class="fa-solid fa-cart-plus"></i> ဝယ်မည်
                         </button>
-                        <button onclick="editProduct(${originalIndex})" class="bg-amber-100 text-amber-700 px-3 py-2 rounded-xl hover:bg-amber-200 transition cursor-pointer" title="ပြင်ဆင်ရန်">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                        <button onclick="deleteProduct(${originalIndex})" class="bg-red-100 text-red-600 px-3 py-2 rounded-xl hover:bg-red-200 transition cursor-pointer" title="ဖျက်ရန်">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
+                        ${adminButtonsHtml}
                     </div>
                 `;
           productGrid.appendChild(card);
         });
       }
 
-      // Filter & Search
       function filterProducts() {
         const searchText = document
           .getElementById("search-input")
@@ -398,8 +542,8 @@
         .getElementById("search-input")
         .addEventListener("input", filterProducts);
 
-      // Edit Product
-      function editProduct(index) {
+      window.editProduct = function (index) {
+        if (!isAdminLoggedIn) return;
         const prod = products[index];
         document.getElementById("new-name").value = prod.name;
         document.getElementById("new-price").value = prod.price;
@@ -415,13 +559,11 @@
         document.getElementById("submit-btn").textContent =
           `ပြင်ဆင်မှု သိမ်းဆည်းမည်`;
         document.getElementById("cancel-edit").classList.remove("hidden");
-
         adminPanel.classList.remove("hidden");
         window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+      };
 
-      // Reset Form
-      function resetForm() {
+      window.resetForm = function () {
         editingIndex = -1;
         document.getElementById("add-product-form").reset();
         document.getElementById("form-title").innerHTML =
@@ -430,13 +572,14 @@
           `ပစ္စည်းစာရင်းသို့ ထည့်မည်`;
         document.getElementById("cancel-edit").classList.add("hidden");
         adminPanel.classList.add("hidden");
-      }
+      };
 
-      // Add or Update Product
       document
         .getElementById("add-product-form")
         .addEventListener("submit", (e) => {
           e.preventDefault();
+          if (!isAdminLoggedIn) return;
+
           const name = document.getElementById("new-name").value.trim();
           const price = parseInt(document.getElementById("new-price").value);
           const category = document.getElementById("new-category").value;
@@ -461,17 +604,16 @@
           adminPanel.classList.add("hidden");
         });
 
-      // Delete Product
-      function deleteProduct(index) {
+      window.deleteProduct = function (index) {
+        if (!isAdminLoggedIn) return;
         if (confirm("ဤပစ္စည်းကို ဖျက်ရန် သေချာပါသလား?")) {
           products.splice(index, 1);
           localStorage.setItem("kstu_products", JSON.stringify(products));
           filterProducts();
         }
-      }
+      };
 
-      // Product Modal
-      function openProductModal(index) {
+      window.openProductModal = function (index) {
         const prod = products[index];
         let specsHtml = prod.specs
           ? prod.specs
@@ -498,27 +640,21 @@
                 </button>
             `;
         productModal.classList.remove("hidden");
-      }
+      };
 
       document
         .getElementById("close-modal")
         .addEventListener("click", () => productModal.classList.add("hidden"));
-      document
-        .getElementById("admin-toggle-btn")
-        .addEventListener("click", () => adminPanel.classList.toggle("hidden"));
 
       // Cart Functions
-      function addToCart(index) {
+      window.addToCart = function (index) {
         const prod = products[index];
         const existing = cart.find((item) => item.name === prod.name);
-        if (existing) {
-          existing.qty += 1;
-        } else {
-          cart.push({ ...prod, qty: 1 });
-        }
+        if (existing) existing.qty += 1;
+        else cart.push({ ...prod, qty: 1 });
         updateCartUI();
         alert("ပစ္စည်းကို Cart ထဲသို့ ထည့်ပြီးပါပြီ!");
-      }
+      };
 
       function updateCartUI() {
         cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -549,10 +685,10 @@
         cartTotal.textContent = total.toLocaleString() + " ကျပ်";
       }
 
-      function removeFromCart(index) {
+      window.removeFromCart = function (index) {
         cart.splice(index, 1);
         updateCartUI();
-      }
+      };
 
       document
         .getElementById("cart-btn")
@@ -565,20 +701,21 @@
           cartSidebar.classList.add("translate-x-full"),
         );
 
-      // Telegram Checkout Function
-      function checkoutTelegram() {
+      window.checkoutTelegram = function () {
         if (cart.length === 0) {
           alert("ကျေးဇူးပြု၍ Cart ထဲသို့ ပစ္စည်း အရင်ထည့်ပါ။");
           return;
         }
 
         const name = document.getElementById("customer-name").value.trim();
-        const phone = document.getElementById("customer-phone").value.trim();
+        const phoneInput = document
+          .getElementById("customer-phone")
+          .value.trim();
         const address = document
           .getElementById("customer-address")
           .value.trim();
 
-        if (!name || !phone) {
+        if (!name || !phoneInput) {
           alert("ကျေးဇူးပြု၍ ဝယ်သူ၏ အမည်နှင့် ဖုန်းနံပါတ်ကို ဖြည့်စွက်ပေးပါ။");
           return;
         }
@@ -586,7 +723,7 @@
         let message = `🛒 *KSTU Store မှ Order အသစ်ဝင်ပါသည်*%0A`;
         message += `-----------------------------------%0A`;
         message += `👤 *အမည်:* ${name}%0A`;
-        message += `📞 *ဖုန်းနံပါတ်:* ${phone}%0A`;
+        message += `📞 *ဖုန်းနံပါတ်:* ${phoneInput}%0A`;
         message += `🏠 *လိပ်စာ:* ${address || "မပါရှိပါ"}%0A`;
         message += `-----------------------------------%0A`;
         message += `📦 *ဝယ်ယူသည့် ပစ္စည်းများ:*%0A`;
@@ -601,14 +738,11 @@
         message += `-----------------------------------%0A`;
         message += `💰 *စုစုပေါင်းကျသင့်ငွေ:* ${total.toLocaleString()} ကျပ်`;
 
-        // သတိပြုရန်: 'Friend676' နေရာတွင် သင်၏ တကယ်သုံးနေသော Telegram Username ကို ထည့်ထားပါ (@ မပါစေရ)
         const myTelegramUsername = "Friend676";
         const telegramUrl = `https://t.me/${myTelegramUsername}?text=${message}`;
-
         window.open(telegramUrl, "_blank");
-      }
+      };
 
-      // Initial Render
       renderCategories();
       renderProducts(products);
     </script>
