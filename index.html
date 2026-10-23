@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KSTU Store - Cloud Database & Categories</title>
+    <title>KSTU Store - E-Commerce</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link
       rel="stylesheet"
@@ -262,7 +262,7 @@
           onclick="checkoutTelegram()"
           class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-md"
         >
-          <i class="fa-brands fa-telegram text-xl"></i> Telegram ဖြင့် Order
+          <i class="fa-brands fa-telegram text-xl"></i> Telegram Bot ဖြင့် Order
           တင်မည်
         </button>
       </div>
@@ -350,7 +350,6 @@
               "Accessories",
             ];
           } else {
-            // Initialize default categories in Firestore if not exist
             await setDoc(doc(db, "settings", "categories"), {
               list: categories,
             });
@@ -721,7 +720,8 @@
           cartSidebar.classList.add("translate-x-full"),
         );
 
-      window.checkoutTelegram = function () {
+      // Telegram Bot Checkout Function
+      window.checkoutTelegram = async function () {
         if (cart.length === 0) {
           alert("ကျေးဇူးပြု၍ Cart ထဲသို့ ပစ္စည်း အရင်ထည့်ပါ။");
           return;
@@ -738,16 +738,42 @@
         }
 
         let message = `🛒 *KSTU Store မှ Order အသစ်ဝင်ပါသည်*%0A`;
-        message += `👤 *အမည်:* ${name}%0A📞 *ဖုန်း:* ${phone}%0A🏠 *လိပ်စာ:* ${address || "မပါ"}%0A-----------------------------------%0A`;
+        message += `👤 *အမည်:* ${name}%0A`;
+        message += `📞 *ဖုန်း:* ${phone}%0A`;
+        message += `🏠 *လိပ်စာ:* ${address || "မပါ"}%0A`;
+        message += `-----------------------------------%0A`;
         let total = 0;
         cart.forEach((item, index) => {
           let itemTotal = item.price * item.qty;
           total += itemTotal;
           message += `${index + 1}. ${item.name} (${item.qty} ခု) - ${itemTotal.toLocaleString()} ကျပ်%0A`;
         });
-        message += `-----------------------------------%0A💰 *စုစုပေါင်း:* ${total.toLocaleString()} ကျပ်`;
+        message += `-----------------------------------%0A`;
+        message += `💰 *စုစုပေါင်းကျသင့်ငွေ:* ${total.toLocaleString()} ကျပ်`;
 
-        window.open(`https://t.me/Friend676?text=${message}`, "_blank");
+        // BotFather မှရသော Token နှင့် Chat ID ကို ဤနေရာတွင် ထည့်ပါ
+        const botToken = "8926787721:AAGahQfGYIk4ZKrzQWpWDwnvo6Etsd55Na0";
+        const chatId = "1693313821";
+
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+          if (data.ok) {
+            alert("Order တင်ခြင်း အောင်မြင်ပါသည်။ ကျေးဇူးတင်ပါသည်။ 🎉");
+            cart = [];
+            updateCartUI();
+            document
+              .getElementById("cart-sidebar")
+              .classList.add("translate-x-full");
+          } else {
+            alert("Order တင်၍ မရပါ။ Token သို့မဟုတ် Chat ID ကို စစ်ဆေးပါ။");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("ချိတ်ဆက်မှု အမှားအယွင်း ရှိနေပါသည်။");
+        }
       };
 
       // Initial Load
