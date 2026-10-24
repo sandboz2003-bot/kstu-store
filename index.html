@@ -11,56 +11,121 @@
     />
   </head>
   <body class="bg-gray-50 text-gray-800 font-sans">
-    <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-40">
+    <!-- Header (Blue & White School Uniform Theme) -->
+    <header
+      class="bg-white shadow-sm sticky top-0 z-40 border-b border-blue-100"
+    >
       <div
-        class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center"
+        class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-4"
       >
-        <h1 class="text-2xl font-bold text-indigo-600 flex items-center gap-2">
+        <h1
+          class="text-2xl font-black text-blue-700 flex items-center gap-2 cursor-pointer"
+        >
           <i class="fa-solid fa-store"></i> KSTU Store
         </h1>
-        <div class="flex items-center gap-4">
+
+        <!-- Desktop Search Bar -->
+        <div class="hidden md:flex flex-1 max-w-xl relative">
+          <input
+            type="text"
+            id="search-input-desktop"
+            placeholder="ပစ္စည်းများကို ရှာရန်..."
+            class="w-full pl-4 pr-10 py-2 bg-blue-50/50 border border-blue-200 rounded-lg focus:outline-none focus:border-blue-600 text-sm"
+          />
+          <button
+            class="absolute right-0 top-0 h-full px-4 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 transition"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3">
           <button
             id="admin-toggle-btn"
-            class="bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg text-sm font-medium transition flex items-center gap-1 cursor-pointer"
+            class="bg-blue-50 text-blue-700 hover:bg-blue-100 px-3 py-2 rounded-lg text-sm font-medium transition flex items-center gap-1 cursor-pointer"
           >
-            <i class="fa-solid fa-lock"></i> Admin Login
+            <i class="fa-solid fa-lock"></i> Admin
           </button>
           <button
             id="cart-btn"
-            class="relative bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition flex items-center gap-2 cursor-pointer"
+            class="relative bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center gap-2 cursor-pointer shadow-sm"
           >
-            <i class="fa-solid fa-cart-shopping"></i> Cart
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="hidden sm:inline">Cart</span>
             <span
               id="cart-count"
-              class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold"
+              class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold shadow"
               >0</span
             >
           </button>
+        </div>
+      </div>
+      <!-- Mobile Search Bar -->
+      <div class="md:hidden px-4 pb-3">
+        <div class="relative w-full">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="ပစ္စည်းများကို ရှာရန်..."
+            class="w-full pl-10 pr-4 py-2 bg-blue-50/50 border border-blue-200 rounded-lg focus:outline-none focus:border-blue-600 text-sm"
+          />
+          <i
+            class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-blue-400"
+          ></i>
         </div>
       </div>
     </header>
 
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 py-6">
-      <!-- Search & Category Bar -->
+      <!-- Hero Banner (Blue & White Theme) -->
       <div
-        class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8"
+        class="bg-gradient-to-r from-blue-700 to-indigo-800 rounded-2xl p-6 md:p-8 mb-8 text-white shadow-lg flex flex-col md:flex-row justify-between items-center relative overflow-hidden"
       >
-        <div class="w-full md:w-1/3 relative">
-          <input
-            type="text"
-            id="search-input"
-            placeholder="ပစ္စည်းများကို ရှာရန်..."
-            class="w-full pl-10 pr-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
-          />
-          <i
-            class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400"
-          ></i>
+        <div class="relative z-10 space-y-2 mb-4 md:mb-0">
+          <span
+            class="bg-white/20 text-white text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider"
+            >KSTU Official Store</span
+          >
+          <h2 class="text-3xl md:text-4xl font-black">
+            ကျောင်းသုံးနှင့် Electronic ပစ္စည်းများ
+          </h2>
+          <p class="text-blue-100 text-sm md:text-base max-w-lg">
+            အရည်အသွေးမြင့် ပစ္စည်းများကို သက်သာသောဈေးနှုန်းဖြင့်
+            လွယ်ကူလျင်မြန်စွာ ဝယ်ယူနိုင်ပါပြီ။
+          </p>
         </div>
+        <div class="relative z-10 flex gap-3">
+          <div
+            class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 text-center"
+          >
+            <i class="fa-solid fa-graduation-cap text-2xl mb-1 text-white"></i>
+            <p class="text-xs font-bold">ကျောင်းသားအထူး</p>
+          </div>
+          <div
+            class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 text-center"
+          >
+            <i class="fa-solid fa-shield-halved text-2xl mb-1 text-white"></i>
+            <p class="text-xs font-bold">ယုံကြည်စိတ်ချရမှု</p>
+          </div>
+        </div>
+        <!-- Background Decorative circles -->
+        <div
+          class="absolute -right-10 -bottom-10 w-60 h-60 bg-blue-500/20 rounded-full blur-2xl"
+        ></div>
+      </div>
+
+      <!-- Category Bar -->
+      <div class="mb-8">
+        <h3
+          class="font-bold text-gray-700 mb-3 text-sm uppercase tracking-wider flex items-center gap-2"
+        >
+          <i class="fa-solid fa-list text-blue-600"></i> အမျိုးအစားများ
+          (Categories)
+        </h3>
         <div
           id="category-bar"
-          class="flex flex-wrap gap-2 w-full md:w-auto justify-start md:justify-end"
+          class="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-hide"
         >
           <!-- Dynamic Categories -->
         </div>
@@ -69,18 +134,18 @@
       <!-- Admin Panel -->
       <div
         id="admin-panel"
-        class="hidden bg-white p-6 rounded-2xl shadow-lg mb-8 border border-indigo-100"
+        class="hidden bg-white p-6 rounded-2xl shadow-xl mb-8 border border-blue-200"
       >
-        <div class="flex justify-between items-center mb-4">
+        <div class="flex justify-between items-center mb-4 border-b pb-3">
           <h2
             id="form-title"
-            class="text-xl font-bold text-indigo-600 flex items-center gap-2"
+            class="text-xl font-bold text-blue-700 flex items-center gap-2"
           >
             <i class="fa-solid fa-circle-plus"></i> ပစ္စည်းအသစ် ထည့်သွင်းရန်
           </h2>
           <button
             onclick="logoutAdmin()"
-            class="bg-red-50 text-red-600 px-3 py-1.5 rounded-lg text-sm hover:bg-red-100 transition cursor-pointer"
+            class="bg-red-50 text-red-600 px-3 py-1.5 rounded-lg text-sm hover:bg-red-100 transition cursor-pointer font-medium"
           >
             Logout ထွက်မည်
           </button>
@@ -94,20 +159,20 @@
             id="new-name"
             placeholder="ပစ္စည်းနာမည်"
             required
-            class="border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            class="border border-gray-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50"
           />
           <input
             type="number"
             id="new-price"
             placeholder="ဈေးနှုန်း (ကျပ်)"
             required
-            class="border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            class="border border-gray-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50"
           />
 
           <div class="flex gap-2">
             <select
               id="new-category"
-              class="border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 flex-1"
+              class="border border-gray-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 flex-1 bg-gray-50"
             >
               <!-- Dynamic Options -->
             </select>
@@ -134,20 +199,36 @@
             id="new-image"
             placeholder="ပုံလင့်ခ် (Image URL)"
             required
-            class="border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            class="border border-gray-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50"
           />
           <input
             type="text"
             id="new-specs"
             placeholder="Specs များ (ကော်မာ , ဖြင့် ခွဲရန်)"
-            class="border p-2.5 rounded-xl md:col-span-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            class="border border-gray-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50"
           />
 
-          <div class="md:col-span-2 flex gap-2">
+          <!-- Stock Status Selection -->
+          <div
+            class="flex items-center gap-2 border border-gray-300 p-2.5 rounded-xl bg-gray-50"
+          >
+            <label for="new-status" class="text-sm font-bold text-gray-700"
+              >ပစ္စည်းအနေအထား:</label
+            >
+            <select
+              id="new-status"
+              class="flex-1 bg-white border border-gray-300 p-1.5 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+            >
+              <option value="in">In Stock (ပစ္စည်းရှိ)</option>
+              <option value="out">Out of Stock (ပစ္စည်းကုန်)</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-2 flex gap-2 pt-2">
             <button
               type="submit"
               id="submit-btn"
-              class="flex-1 bg-indigo-600 text-white py-2.5 rounded-xl hover:bg-indigo-700 font-medium transition cursor-pointer"
+              class="flex-1 bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 font-bold transition cursor-pointer shadow"
             >
               ပစ္စည်းစာရင်းသို့ ထည့်မည်
             </button>
@@ -155,7 +236,7 @@
               type="button"
               id="cancel-edit"
               onclick="resetForm()"
-              class="hidden bg-gray-300 text-gray-700 px-6 py-2.5 rounded-xl hover:bg-gray-400 font-medium transition cursor-pointer"
+              class="hidden bg-gray-300 text-gray-700 px-6 py-3 rounded-xl hover:bg-gray-400 font-medium transition cursor-pointer"
             >
               မလုပ်တော့ပါ
             </button>
@@ -163,21 +244,89 @@
         </form>
       </div>
 
+      <!-- Product Grid Header -->
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-bold text-lg text-gray-800">
+          ရရှိနိုင်သော ပစ္စည်းများ
+        </h3>
+      </div>
+
       <!-- Product Grid -->
       <div
         id="product-grid"
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"
       >
         <!-- Cloud Products -->
       </div>
     </main>
 
+    <!-- Custom Centered Toast Notification Box -->
+    <div
+      id="toast-notification"
+      class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-md border border-blue-200 shadow-2xl rounded-2xl p-5 z-50 scale-95 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-4 min-w-[300px]"
+    >
+      <div
+        id="toast-icon"
+        class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xl shrink-0"
+      >
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <div>
+        <h4 id="toast-title" class="font-bold text-gray-800 text-base">
+          အောင်မြင်ပါသည်။
+        </h4>
+        <p id="toast-message" class="text-xs text-gray-500 mt-0.5">
+          လုပ်ဆောင်ချက် အောင်မြင်ပါသည်။
+        </p>
+      </div>
+    </div>
+
+    <!-- Custom Confirmation Modal -->
+    <div
+      id="confirm-modal"
+      class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-white rounded-2xl max-w-sm w-full p-6 relative shadow-2xl border border-gray-100 text-center space-y-4"
+      >
+        <div
+          class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold"
+        >
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div>
+          <h3 id="confirm-title" class="font-bold text-lg text-gray-800 mb-1">
+            သေချာပါသလား?
+          </h3>
+          <p id="confirm-text" class="text-xs text-gray-500">
+            ဤလုပ်ဆောင်ချက်ကို အတည်ပြုရန် သေချာပါသလား။
+          </p>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button
+            id="confirm-cancel-btn"
+            class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2.5 rounded-xl font-bold transition text-sm cursor-pointer"
+          >
+            မလုပ်တော့ပါ
+          </button>
+          <button
+            id="confirm-ok-btn"
+            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl font-bold transition text-sm cursor-pointer"
+          >
+            သေချာပါတယ်
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Admin Login Modal -->
     <div
       id="login-modal"
-      class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4"
+      class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4"
     >
-      <div class="bg-white rounded-2xl max-w-sm w-full p-6 relative shadow-2xl">
+      <div
+        class="bg-white rounded-2xl max-w-sm w-full p-6 relative shadow-2xl border border-gray-100"
+      >
         <button
           onclick="
             document.getElementById('login-modal').classList.add('hidden')
@@ -187,7 +336,7 @@
           <i class="fa-solid fa-xmark"></i>
         </button>
         <h2
-          class="text-xl font-bold text-indigo-600 mb-4 flex items-center gap-2"
+          class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"
         >
           <i class="fa-solid fa-lock"></i> Admin Login
         </h2>
@@ -197,18 +346,18 @@
             id="admin-email"
             placeholder="Admin Email"
             required
-            class="w-full border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            class="w-full border border-gray-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50"
           />
           <input
             type="password"
             id="admin-password"
             placeholder="Password"
             required
-            class="w-full border p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            class="w-full border border-gray-300 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50"
           />
           <button
             type="submit"
-            class="w-full bg-indigo-600 text-white py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition cursor-pointer"
+            class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition cursor-pointer shadow"
           >
             Login ဝင်မည်
           </button>
@@ -222,7 +371,7 @@
       class="fixed inset-y-0 right-0 w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 flex flex-col"
     >
       <div
-        class="p-4 bg-indigo-600 text-white flex justify-between items-center"
+        class="p-4 bg-blue-700 text-white flex justify-between items-center shadow"
       >
         <h2 class="font-bold text-lg flex items-center gap-2">
           <i class="fa-solid fa-cart-shopping"></i> သင်၏ Cart နှင့် Order တင်ရန်
@@ -235,24 +384,24 @@
         </button>
       </div>
       <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
-      <div class="p-4 border-t bg-gray-50 space-y-3">
+      <div class="p-4 border-t bg-gray-50 space-y-3 shadow-inner">
         <input
           type="text"
           id="customer-name"
           placeholder="အမည် (Name)"
-          class="w-full p-2 border rounded-lg text-sm bg-white"
+          class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white"
         />
         <input
           type="text"
           id="customer-phone"
           placeholder="ဖုန်းနံပါတ် (Phone Number)"
-          class="w-full p-2 border rounded-lg text-sm bg-white"
+          class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white"
         />
         <textarea
           id="customer-address"
           placeholder="လိပ်စာ (Address)"
           rows="2"
-          class="w-full p-2 border rounded-lg text-sm bg-white"
+          class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white"
         ></textarea>
 
         <!-- Payment Method Selection -->
@@ -263,7 +412,7 @@
           <select
             id="payment-method"
             onchange="togglePaymentProof()"
-            class="w-full p-2 border rounded-lg text-sm bg-white"
+            class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white"
           >
             <option value="KBZ Pay">KBZ Pay (ငွေလွှဲပြေစာ ပို့ရန်)</option>
             <option value="Wave Pay">Wave Pay (ငွေလွှဲပြေစာ ပို့ရန်)</option>
@@ -274,25 +423,24 @@
         <!-- Payment Instructions & QR Code -->
         <div
           id="payment-info-box"
-          class="bg-indigo-50 p-3 rounded-lg text-xs space-y-2 text-indigo-900 border border-indigo-100"
+          class="bg-blue-50 p-3 rounded-lg text-xs space-y-2 text-blue-900 border border-blue-200"
         >
           <p class="font-bold text-center">
             ငွေပေးချေရန် QR Code (သို့) အကောင့်
           </p>
 
-          <!-- Imgur မှရလာသော QR Code ပုံလင့်ခ်ကို ဤနေရာတွင် ထည့်ပါ -->
           <div class="flex justify-center">
             <img
               src="https://github.com/sandboz2003-bot/kstu-store/blob/main/photo_2026-10-23_17-25-17.jpg?raw=true"
               alt="Payment QR"
-              class="w-32 h-32 object-contain rounded-lg border bg-white p-1"
+              class="w-32 h-32 object-contain rounded-lg border bg-white p-1 shadow-sm"
             />
           </div>
 
           <div class="text-center space-y-0.5">
             <p>
               KBZPay/WavePay:
-              <span class="font-bold text-indigo-600">09650627932 (Mg Mg)</span>
+              <span class="font-bold text-blue-700">09650627932 (Mg Mg)</span>
             </p>
           </div>
 
@@ -304,18 +452,18 @@
               type="file"
               id="payment-screenshot"
               accept="image/*"
-              class="w-full text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 cursor-pointer"
+              class="w-full text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer"
             />
           </div>
         </div>
 
-        <div class="flex justify-between font-bold text-base pt-2">
+        <div class="flex justify-between font-bold text-base pt-2 border-t">
           <span>စုစုပေါင်းကျသင့်ငွေ:</span>
-          <span id="cart-total" class="text-indigo-600">0 ကျပ်</span>
+          <span id="cart-total" class="text-blue-700">0 ကျပ်</span>
         </div>
         <button
           onclick="checkoutTelegram()"
-          class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-md"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-md"
         >
           <i class="fa-brands fa-telegram text-xl"></i> Telegram Bot ဖြင့် Order
           တင်မည်
@@ -326,9 +474,11 @@
     <!-- Product Details Modal -->
     <div
       id="product-modal"
-      class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4"
+      class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4"
     >
-      <div class="bg-white rounded-2xl max-w-lg w-full p-6 relative shadow-2xl">
+      <div
+        class="bg-white rounded-2xl max-w-lg w-full p-6 relative shadow-2xl border border-gray-100"
+      >
         <button
           id="close-modal"
           class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl cursor-pointer"
@@ -404,6 +554,62 @@
         }
       };
 
+      // Custom Centered Toast Notification Function
+      function showToast(message, isSuccess = true) {
+        const toast = document.getElementById("toast-notification");
+        const msgEl = document.getElementById("toast-message");
+        const iconEl = document.getElementById("toast-icon");
+        const titleEl = document.getElementById("toast-title");
+
+        msgEl.textContent = message;
+        titleEl.textContent = isSuccess ? "အောင်မြင်ပါသည်။" : "သတိပေးချက်";
+
+        if (isSuccess) {
+          iconEl.className =
+            "w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xl shrink-0";
+          iconEl.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
+        } else {
+          iconEl.className =
+            "w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center font-bold text-xl shrink-0";
+          iconEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i>`;
+        }
+
+        toast.classList.remove("scale-95", "opacity-0", "pointer-events-none");
+        toast.classList.add("scale-100", "opacity-100");
+
+        setTimeout(() => {
+          toast.classList.remove("scale-100", "opacity-100");
+          toast.classList.add("scale-95", "opacity-0", "pointer-events-none");
+        }, 3000);
+      }
+
+      // Custom Confirm Dialog Function
+      function showConfirm(title, text, onConfirm) {
+        const modal = document.getElementById("confirm-modal");
+        const titleEl = document.getElementById("confirm-title");
+        const textEl = document.getElementById("confirm-text");
+        const okBtn = document.getElementById("confirm-ok-btn");
+        const cancelBtn = document.getElementById("confirm-cancel-btn");
+
+        titleEl.textContent = title;
+        textEl.textContent = text;
+        modal.classList.remove("hidden");
+
+        const newOkBtn = okBtn.cloneNode(true);
+        const newCancelBtn = cancelBtn.cloneNode(true);
+        okBtn.parentNode.replaceChild(newOkBtn, okBtn);
+        cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+        newOkBtn.addEventListener("click", () => {
+          modal.classList.add("hidden");
+          onConfirm();
+        });
+
+        newCancelBtn.addEventListener("click", () => {
+          modal.classList.add("hidden");
+        });
+      }
+
       async function fetchCategories() {
         try {
           const catDoc = await getDoc(doc(db, "settings", "categories"));
@@ -450,7 +656,7 @@
           isAdminLoggedIn = false;
           adminToggleBtn.innerHTML = `<i class="fa-solid fa-lock"></i> Admin Login`;
           adminToggleBtn.className =
-            "bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg text-sm font-medium transition flex items-center gap-1 cursor-pointer";
+            "bg-blue-50 text-blue-700 hover:bg-blue-100 px-3 py-2 rounded-lg text-sm font-medium transition flex items-center gap-1 cursor-pointer";
           adminPanel.classList.add("hidden");
           renderProducts(products);
         }
@@ -461,12 +667,14 @@
         const email = document.getElementById("admin-email").value;
         const password = document.getElementById("admin-password").value;
         signInWithEmailAndPassword(auth, email, password)
-          .then(() => alert("Admin အဖြစ် ဝင်ရောက်ပြီးပါပြီ!"))
-          .catch((error) => alert("Login မအောင်မြင်ပါ: " + error.message));
+          .then(() => showToast("Admin အဖြစ် ဝင်ရောက်ပြီးပါပြီ!"))
+          .catch((error) =>
+            showToast("Login မအောင်မြင်ပါ: " + error.message, false),
+          );
       });
 
       window.logoutAdmin = function () {
-        signOut(auth).then(() => alert("Admin အကောင့်မှ ထွက်လိုက်ပါပြီ။"));
+        signOut(auth).then(() => showToast("Admin အကောင့်မှ ထွက်လိုက်ပါပြီ။"));
       };
 
       adminToggleBtn.addEventListener("click", () => {
@@ -475,11 +683,11 @@
       });
 
       function renderCategories() {
-        categoryBar.innerHTML = `<button data-category="All" class="cat-btn px-4 py-2 rounded-xl text-sm font-medium ${currentCategory === "All" ? "bg-indigo-600 text-white" : "bg-white text-gray-600 border"} transition cursor-pointer">အားလုံး</button>`;
+        categoryBar.innerHTML = `<button data-category="All" class="cat-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap shadow-xs ${currentCategory === "All" ? "bg-blue-600 text-white" : "bg-white text-gray-700 border border-gray-200 hover:bg-blue-50"} transition cursor-pointer">အားလုံး (All)</button>`;
         categories.forEach((cat) => {
           const isActive = currentCategory === cat;
           const btn = document.createElement("button");
-          btn.className = `cat-btn px-4 py-2 rounded-xl text-sm font-medium ${isActive ? "bg-indigo-600 text-white" : "bg-white text-gray-600 border hover:bg-gray-100"} transition cursor-pointer`;
+          btn.className = `cat-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap shadow-xs ${isActive ? "bg-blue-600 text-white" : "bg-white text-gray-700 border border-gray-200 hover:bg-blue-50"} transition cursor-pointer`;
           btn.setAttribute("data-category", cat);
           btn.textContent = cat;
           categoryBar.appendChild(btn);
@@ -515,12 +723,12 @@
               });
               renderCategories();
               newCategorySelect.value = formattedCat;
-              alert("Category အသစ် ထည့်သွင်းပြီးပါပြီ!");
+              showToast("Category အသစ် ထည့်သွင်းပြီးပါပြီ!");
             } catch (error) {
-              alert("Error: " + error.message);
+              showToast("Error: " + error.message, false);
             }
           } else {
-            alert("ဤ Category သည် ရှိပြီးသား ဖြစ်ပါသည်။");
+            showToast("ဤ Category သည် ရှိပြီးသား ဖြစ်ပါသည်။", false);
           }
         }
       };
@@ -529,54 +737,69 @@
         if (!isAdminLoggedIn) return;
         const selectedCat = newCategorySelect.value;
         if (!selectedCat) return;
-        if (confirm(`"${selectedCat}" Category ကို ဖျက်ရန် သေချာပါသလား?`)) {
-          categories = categories.filter((cat) => cat !== selectedCat);
-          try {
-            await setDoc(doc(db, "settings", "categories"), {
-              list: categories,
-            });
-            if (currentCategory === selectedCat) currentCategory = "All";
-            renderCategories();
-            filterProducts();
-            alert("Category ကို ဖျက်ပြီးပါပြီ။");
-          } catch (error) {
-            alert("Error: " + error.message);
-          }
-        }
+
+        showConfirm(
+          "Category ဖျက်ရန်",
+          `"${selectedCat}" Category ကို ဖျက်ရန် သေချာပါသလား?`,
+          async () => {
+            categories = categories.filter((cat) => cat !== selectedCat);
+            try {
+              await setDoc(doc(db, "settings", "categories"), {
+                list: categories,
+              });
+              if (currentCategory === selectedCat) currentCategory = "All";
+              renderCategories();
+              filterProducts();
+              showToast("Category ကို ဖျက်ပြီးပါပြီ။");
+            } catch (error) {
+              showToast("Error: " + error.message, false);
+            }
+          },
+        );
       };
 
       function renderProducts(items) {
         productGrid.innerHTML = "";
         if (items.length === 0) {
-          productGrid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-8">ပစ္စည်း မရှိသေးပါ။</p>`;
+          productGrid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-12 bg-white rounded-2xl border border-gray-200">ပစ္စည်း မရှိသေးပါ။</p>`;
           return;
         }
         items.forEach((prod) => {
           const card = document.createElement("div");
           card.className =
-            "bg-white rounded-2xl shadow hover:shadow-lg transition p-4 flex flex-col justify-between border border-gray-100 relative group";
+            "bg-white rounded-2xl shadow-xs hover:shadow-xl transition-all duration-300 p-4 flex flex-col justify-between border border-gray-200 relative group overflow-hidden";
+
+          const isOutOfStock = prod.status === "out";
+          const statusBadge = isOutOfStock
+            ? `<span class="absolute top-2 right-2 bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-md font-bold shadow-xs">Out of Stock</span>`
+            : `<span class="absolute top-2 right-2 bg-emerald-600 text-white text-[10px] px-2 py-0.5 rounded-md font-bold shadow-xs">In Stock</span>`;
+
+          const actionButton = isOutOfStock
+            ? `<button disabled class="w-full bg-gray-300 text-gray-500 py-2.5 rounded-xl text-sm font-bold cursor-not-allowed flex items-center justify-center gap-2"><i class="fa-solid fa-ban"></i> ပစ္စည်းကုန်</button>`
+            : `<button onclick="addToCart('${prod.id}')" class="w-full bg-blue-600 text-white py-2.5 rounded-xl text-sm font-bold hover:bg-blue-700 transition flex items-center justify-center gap-2 cursor-pointer shadow-sm"><i class="fa-solid fa-cart-plus"></i> ဝယ်မည်</button>`;
 
           let adminButtonsHtml = "";
           if (isAdminLoggedIn) {
             adminButtonsHtml = `
-                        <button onclick="editProduct('${prod.id}')" class="bg-amber-100 text-amber-700 px-3 py-2 rounded-xl hover:bg-amber-200 transition cursor-pointer" title="ပြင်ဆင်ရန်"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteProduct('${prod.id}')" class="bg-red-100 text-red-600 px-3 py-2 rounded-xl hover:bg-red-200 transition cursor-pointer" title="ဖျက်ရန်"><i class="fa-solid fa-trash"></i></button>
+                        <div class="flex gap-2 mt-2 pt-2 border-t border-gray-100">
+                            <button onclick="editProduct('${prod.id}')" class="flex-1 bg-amber-50 text-amber-700 py-2 rounded-xl hover:bg-amber-100 transition cursor-pointer text-xs font-bold" title="ပြင်ဆင်ရန်"><i class="fa-solid fa-pen-to-square"></i> ပြင်ရန်</button>
+                            <button onclick="deleteProduct('${prod.id}')" class="flex-1 bg-red-50 text-red-600 py-2 rounded-xl hover:bg-red-100 transition cursor-pointer text-xs font-bold" title="ဖျက်ရန်"><i class="fa-solid fa-trash"></i> ဖျက်ရန်</button>
+                        </div>
                     `;
           }
 
           card.innerHTML = `
                     <div>
-                        <div class="relative overflow-hidden rounded-xl mb-3 cursor-pointer" onclick="openProductModal('${prod.id}')">
-                            <img src="${prod.image}" alt="${prod.name}" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
-                            <span class="absolute top-2 left-2 bg-indigo-600 text-white text-xs px-2.5 py-1 rounded-full">${prod.category}</span>
+                        <div class="relative overflow-hidden rounded-xl mb-3 cursor-pointer bg-gray-100 h-48 flex items-center justify-center" onclick="openProductModal('${prod.id}')">
+                            <img src="${prod.image}" alt="${prod.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <span class="absolute top-2 left-2 bg-blue-900/70 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded-md font-medium">${prod.category}</span>
+                            ${statusBadge}
                         </div>
-                        <h3 class="font-bold text-lg mb-1 cursor-pointer hover:text-indigo-600 transition" onclick="openProductModal('${prod.id}')">${prod.name}</h3>
-                        <p class="text-indigo-600 font-bold mb-3">${prod.price.toLocaleString()} ကျပ်</p>
+                        <h3 class="font-bold text-gray-800 text-base mb-1 cursor-pointer hover:text-blue-600 transition line-clamp-1" onclick="openProductModal('${prod.id}')">${prod.name}</h3>
+                        <p class="text-blue-600 font-extrabold text-lg mb-3">${prod.price.toLocaleString()} ကျပ်</p>
                     </div>
-                    <div class="flex gap-2">
-                        <button onclick="addToCart('${prod.id}')" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl text-sm font-medium hover:bg-indigo-700 transition flex items-center justify-center gap-1 cursor-pointer">
-                            <i class="fa-solid fa-cart-plus"></i> ဝယ်မည်
-                        </button>
+                    <div>
+                        ${actionButton}
                         ${adminButtonsHtml}
                     </div>
                 `;
@@ -585,9 +808,10 @@
       }
 
       function filterProducts() {
-        const searchText = document
-          .getElementById("search-input")
-          .value.toLowerCase();
+        const searchText = (
+          document.getElementById("search-input").value ||
+          document.getElementById("search-input-desktop").value
+        ).toLowerCase();
         const filtered = products.filter((prod) => {
           const matchesCategory =
             currentCategory === "All" || prod.category === currentCategory;
@@ -597,9 +821,16 @@
         renderProducts(filtered);
       }
 
+      document.getElementById("search-input").addEventListener("input", (e) => {
+        document.getElementById("search-input-desktop").value = e.target.value;
+        filterProducts();
+      });
       document
-        .getElementById("search-input")
-        .addEventListener("input", filterProducts);
+        .getElementById("search-input-desktop")
+        .addEventListener("input", (e) => {
+          document.getElementById("search-input").value = e.target.value;
+          filterProducts();
+        });
 
       document
         .getElementById("add-product-form")
@@ -611,6 +842,7 @@
           const price = parseInt(document.getElementById("new-price").value);
           const category = document.getElementById("new-category").value;
           const image = document.getElementById("new-image").value.trim();
+          const status = document.getElementById("new-status").value;
           const specsInput = document.getElementById("new-specs").value.trim();
           let specs = specsInput
             ? specsInput.split(",").map((s) => s.trim())
@@ -623,25 +855,27 @@
                 price,
                 category,
                 image,
+                status,
                 specs,
               });
-              alert("ပစ္စည်းအသစ် ထည့်သွင်းပြီးပါပြီ! 🎉");
+              showToast("ပစ္စည်းအသစ် ထည့်သွင်းပြီးပါပြီ! 🎉");
             } else {
               await updateDoc(doc(db, "products", editingId), {
                 name,
                 price,
                 category,
                 image,
+                status,
                 specs,
               });
-              alert("ပြင်ဆင်ပြီးပါပြီ! ✅");
+              showToast("ပြင်ဆင်ပြီးပါပြီ! ✅");
               resetForm();
             }
             fetchProducts();
             document.getElementById("add-product-form").reset();
             adminPanel.classList.add("hidden");
           } catch (error) {
-            alert("Error: " + error.message);
+            showToast("Error: " + error.message, false);
           }
         });
 
@@ -654,6 +888,7 @@
         document.getElementById("new-price").value = prod.price;
         document.getElementById("new-category").value = prod.category;
         document.getElementById("new-image").value = prod.image;
+        document.getElementById("new-status").value = prod.status || "in";
         document.getElementById("new-specs").value = prod.specs
           ? prod.specs.join(", ")
           : "";
@@ -671,6 +906,7 @@
       window.resetForm = function () {
         editingId = null;
         document.getElementById("add-product-form").reset();
+        document.getElementById("new-status").value = "in";
         document.getElementById("form-title").innerHTML =
           `<i class="fa-solid fa-circle-plus"></i> ပစ္စည်းအသစ် ထည့်သွင်းရန်`;
         document.getElementById("submit-btn").textContent =
@@ -681,15 +917,19 @@
 
       window.deleteProduct = async function (id) {
         if (!isAdminLoggedIn) return;
-        if (confirm("ဤပစ္စည်းကို ဖျက်ရန် သေချာပါသလား?")) {
-          try {
-            await deleteDoc(doc(db, "products", id));
-            fetchProducts();
-            alert("ဖျက်ပြီးပါပြီ။");
-          } catch (error) {
-            alert("Error: " + error.message);
-          }
-        }
+        showConfirm(
+          "ပစ္စည်းဖျက်ရန်",
+          "ဤပစ္စည်းကို ဖျက်ရန် သေချာပါသလား?",
+          async () => {
+            try {
+              await deleteDoc(doc(db, "products", id));
+              fetchProducts();
+              showToast("ဖျက်ပြီးပါပြီ။");
+            } catch (error) {
+              showToast("Error: " + error.message, false);
+            }
+          },
+        );
       };
 
       window.openProductModal = function (id) {
@@ -699,21 +939,29 @@
           ? prod.specs
               .map(
                 (s) =>
-                  `<li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-600 text-xs"></i> ${s}</li>`,
+                  `<li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-600 text-xs"></i> ${s}</li>`,
               )
               .join("")
           : "<li>အချက်အလက် မရှိပါ။</li>";
 
+        const isOutOfStock = prod.status === "out";
+        const modalButton = isOutOfStock
+          ? `<button disabled class="w-full bg-gray-300 text-gray-500 py-3 rounded-xl font-bold cursor-not-allowed">ပစ္စည်းကုန်နေပါပြီ</button>`
+          : `<button onclick="addToCart('${prod.id}'); productModal.classList.add('hidden');" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition cursor-pointer shadow">Cart ထဲသို့ ထည့်မည်</button>`;
+
         modalContent.innerHTML = `
-                <img src="${prod.image}" alt="${prod.name}" class="w-full h-56 object-cover rounded-xl mb-4">
-                <span class="bg-indigo-100 text-indigo-600 text-xs px-2.5 py-1 rounded-full font-medium">${prod.category}</span>
-                <h2 class="text-2xl font-bold mt-2 mb-1">${prod.name}</h2>
-                <p class="text-xl font-bold text-indigo-600 mb-4">${prod.price.toLocaleString()} ကျပ်</p>
+                <img src="${prod.image}" alt="${prod.name}" class="w-full h-56 object-cover rounded-xl mb-4 shadow-xs">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded-full font-bold">${prod.category}</span>
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-full ${isOutOfStock ? "bg-red-100 text-red-600" : "bg-emerald-100 text-emerald-600"}">${isOutOfStock ? "Out of Stock" : "In Stock"}</span>
+                </div>
+                <h2 class="text-2xl font-bold mb-1 text-gray-800">${prod.name}</h2>
+                <p class="text-xl font-black text-blue-600 mb-4">${prod.price.toLocaleString()} ကျပ်</p>
                 <div class="mb-6">
                     <h4 class="font-bold text-gray-700 mb-2">အသေးစိတ် အချက်အလက်များ:</h4>
-                    <ul class="space-y-1.5 text-sm text-gray-600 bg-gray-50 p-3 rounded-xl">${specsHtml}</ul>
+                    <ul class="space-y-1.5 text-sm text-gray-600 bg-gray-50 p-3 rounded-xl border border-gray-200">${specsHtml}</ul>
                 </div>
-                <button onclick="addToCart('${prod.id}'); productModal.classList.add('hidden');" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition cursor-pointer">Cart ထဲသို့ ထည့်မည်</button>
+                ${modalButton}
             `;
         productModal.classList.remove("hidden");
       };
@@ -724,12 +972,15 @@
 
       window.addToCart = function (id) {
         const prod = products.find((p) => p.id === id);
-        if (!prod) return;
+        if (!prod || prod.status === "out") {
+          showToast("ကျေးဇူးပြု၍ Cart ထဲသို့ ပစ္စည်း အရင်ထည့်ပါ။", false);
+          return;
+        }
         const existing = cart.find((item) => item.id === prod.id);
         if (existing) existing.qty += 1;
         else cart.push({ ...prod, qty: 1 });
         updateCartUI();
-        alert("Cart ထဲသို့ ထည့်ပြီးပါပြီ!");
+        showToast("Cart ထဲသို့ ထည့်ပြီးပါပြီ!");
       };
 
       function updateCartUI() {
@@ -737,22 +988,22 @@
         cartItems.innerHTML = "";
         let total = 0;
         if (cart.length === 0) {
-          cartItems.innerHTML = `<p class="text-gray-500 text-center py-4 text-sm">Cart ထဲတွင် ပစ္စည်းမရှိသေးပါ။</p>`;
+          cartItems.innerHTML = `<p class="text-gray-500 text-center py-8 text-sm">Cart ထဲတွင် ပစ္စည်းမရှိသေးပါ။</p>`;
         }
         cart.forEach((item, index) => {
           total += item.price * item.qty;
           const div = document.createElement("div");
           div.className =
-            "flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-100";
+            "flex items-center justify-between bg-white p-3 rounded-xl border border-gray-200 shadow-xs";
           div.innerHTML = `
                     <div class="flex items-center gap-3">
                         <img src="${item.image}" class="w-12 h-12 object-cover rounded-lg">
                         <div>
-                            <h4 class="font-bold text-sm">${item.name}</h4>
+                            <h4 class="font-bold text-sm text-gray-800">${item.name}</h4>
                             <p class="text-xs text-gray-500">${item.price.toLocaleString()} ကျပ် x ${item.qty}</p>
                         </div>
                     </div>
-                    <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700 cursor-pointer p-1"><i class="fa-solid fa-trash-can"></i></button>
+                    <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700 cursor-pointer p-2"><i class="fa-solid fa-trash-can"></i></button>
                 `;
           cartItems.appendChild(div);
         });
@@ -778,7 +1029,7 @@
       // Telegram Checkout with Payment Method & Screenshot
       window.checkoutTelegram = async function () {
         if (cart.length === 0) {
-          alert("ကျေးဇူးပြု၍ Cart ထဲသို့ ပစ္စည်း အရင်ထည့်ပါ။");
+          showToast("ကျေးဇူးပြု၍ Cart ထဲသို့ ပစ္စည်း အရင်ထည့်ပါ။", false);
           return;
         }
         const name = document.getElementById("customer-name").value.trim();
@@ -790,7 +1041,7 @@
         const screenshotInput = document.getElementById("payment-screenshot");
 
         if (!name || !phone) {
-          alert("အမည်နှင့် ဖုန်းနံပါတ် ဖြည့်စွက်ပေးပါ။");
+          showToast("အမည်နှင့် ဖုန်းနံပါတ် ဖြည့်စွက်ပေးပါ။", false);
           return;
         }
 
@@ -833,18 +1084,23 @@
             });
             const data = await response.json();
             if (data.ok) {
-              alert("Order နှင့် ငွေလွှဲပြေစာ ပို့ခြင်း အောင်မြင်ပါသည်။ 🎉");
+              showToast(
+                "Order နှင့် ငွေလွှဲပြေစာ ပို့ခြင်း အောင်မြင်ပါသည်။ 🎉",
+              );
               cart = [];
               updateCartUI();
               document
                 .getElementById("cart-sidebar")
                 .classList.add("translate-x-full");
             } else {
-              alert("Order ပို့၍ မရပါ။ Token သို့မဟုတ် Chat ID ကို စစ်ဆေးပါ။");
+              showToast(
+                "Order ပို့၍ မရပါ။ Token သို့မဟုတ် Chat ID ကို စစ်ဆေးပါ။",
+                false,
+              );
             }
           } catch (error) {
             console.error("Error:", error);
-            alert("ချိတ်ဆက်မှု အမှားအယွင်း ရှိနေပါသည်။");
+            showToast("ချိတ်ဆက်မှု အမှားအယွင်း ရှိနေပါသည်။", false);
           }
         } else {
           const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
@@ -856,18 +1112,18 @@
             });
             const data = await response.json();
             if (data.ok) {
-              alert("Order တင်ခြင်း အောင်မြင်ပါသည်။ 🎉");
+              showToast("Order တင်ခြင်း အောင်မြင်ပါသည်။ 🎉");
               cart = [];
               updateCartUI();
               document
                 .getElementById("cart-sidebar")
                 .classList.add("translate-x-full");
             } else {
-              alert("Order တင်၍ မရပါ။");
+              showToast("Order တင်၍ မရပါ။", false);
             }
           } catch (error) {
             console.error("Error:", error);
-            alert("ချိတ်ဆက်မှု အမှားအယွင်း ရှိနေပါသည်။");
+            showToast("ချိတ်ဆက်မှု အမှားအယွင်း ရှိနေပါသည်။", false);
           }
         }
       };
